@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Espelho Vital</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>🪞 Espelho Vital</h1>
+        <p>Saúde inteligente com IA</p>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="dashboard">
+
+        <div class="card">
+            <div class="metric" id="totalRegistros">0</div>
+            <div class="label">Registros</div>
+        </div>
+
+        <div class="card">
+            <div class="metric" id="mediaSono">0h</div>
+            <div class="label">Último Sono</div>
+        </div>
+
+        <div class="card">
+            <div class="metric" id="statusSono">--</div>
+            <div class="label">Status</div>
+        </div>
+
+        <div class="card">
+            <div class="metric" id="ultimoSono">--</div>
+            <div class="label">Data</div>
+        </div>
+
+    </div>
+
+    <!-- IA -->
+    <div class="card ai-box">
+        <div class="metric">🧠 IA Saúde</div>
+        <div class="label" id="iaResposta">Analisando dados...</div>
+    </div>
+
+    <!-- MENU -->
+    <div class="menu">
+
+        <a class="btn" href="pages/sono.html">😴 Sono</a>
+        <a class="btn" href="pages/historico.html">📖 Histórico</a>
+        <a class="btn" href="pages/analise.html">📊 Análise</a>
+        <a class="btn" href="pages/graficos.html">📈 Gráfico</a>
+        <a class="btn" href="pages/recomendacoes.html">💡 Recomendações</a>
+
+    </div>
+
+</div>
+
+<script src="js/script.js"></script>
+
+</body>
+</html>

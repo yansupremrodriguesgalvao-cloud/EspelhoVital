@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráficos</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <a href="../index.html" class="voltar">
+        ⬅ Voltar ao Dashboard
+    </a>
+
+    <div class="form-card">
+
+        <h2>📈 Qualidade do Sono</h2>
+
+        <canvas id="graficoSono"></canvas>
+
+    </div>
+
+</div>
+
+<script>
+
+async function carregarGrafico() {
+
+    try {
+
+        const resposta =
+            await fetch("http://localhost:8081/sono");
+
+        const registros =
+            await resposta.json();
+
+        let excelente = 0;
+        let boa = 0;
+        let regular = 0;
+        let ruim = 0;
+
+        registros.forEach(item => {
+
+            if(item.qualidade === "Excelente"){
+                excelente++;
+            }
+
+            if(item.qualidade === "Boa"){
+                boa++;
+            }
+
+            if(item.qualidade === "Regular"){
+                regular++;
+            }
+
+            if(item.qualidade === "Ruim"){
+                ruim++;
+            }
+
+        });
+
+        const ctx =
+            document.getElementById("graficoSono");
+
+        new Chart(ctx, {
+
+            type: "bar",
+
+            data: {
+
+                labels: [
+                    "Excelente",
+                    "Boa",
+                    "Regular",
+                    "Ruim"
+                ],
+
+                datasets: [{
+
+                    label: "Quantidade",
+
+                    data: [
+                        excelente,
+                        boa,
+                        regular,
+                        ruim
+                    ]
+
+                }]
+
+            }
+
+        });
+
+    } catch(erro){
+
+        console.error(erro);
+
+    }
+
+}
+
+carregarGrafico();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Humor</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <a href="../index.html" class="voltar">
+        ⬅ Voltar ao Dashboard
+    </a>
+
+    <div class="form-card">
+
+        <h2>😊 Registro de Humor</h2>
+
+        <input
+            type="text"
+            id="observacao"
+            placeholder="Como você está se sentindo hoje?"
+        >
+
+        <select id="humor">
+
+            <option value="Muito Feliz">
+                😄 Muito Feliz
+            </option>
+
+            <option value="Feliz">
+                😊 Feliz
+            </option>
+
+            <option value="Neutro">
+                😐 Neutro
+            </option>
+
+            <option value="Triste">
+                😔 Triste
+            </option>
+
+            <option value="Muito Triste">
+                😢 Muito Triste
+            </option>
+
+        </select>
+
+        <button onclick="salvarHumor()">
+            Salvar Registro
+        </button>
+
+    </div>
+
+</div>
+
+<script src="../js/script.js"></script>
+
+</body>
+</html>

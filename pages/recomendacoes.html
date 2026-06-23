@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendações de Sono</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <a href="../index.html" class="voltar">
+        ⬅ Voltar ao Dashboard
+    </a>
+
+    <div class="form-card">
+
+        <h2>💡 Recomendações de Sono</h2>
+
+        <div id="recomendacao">
+            <p>⏳ Carregando recomendações...</p>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+async function carregarRecomendacoes() {
+
+    try {
+
+        const resposta =
+            await fetch("http://localhost:8081/sono");
+
+        const registros =
+            await resposta.json();
+
+        const area =
+            document.getElementById("recomendacao");
+
+        if (registros.length === 0) {
+
+            area.innerHTML = `
+                <div class="card">
+                    <p>Nenhum registro encontrado.</p>
+                </div>
+            `;
+
+            return;
+        }
+
+        const ultimo =
+            registros[registros.length - 1];
+
+        let mensagem = "";
+
+        if (ultimo.horas < 6) {
+
+            mensagem = `
+                <div class="card">
+                    <h3>⚠️ Atenção</h3>
+                    <p>Você está dormindo pouco.</p>
+                    <p>Tente dormir entre 7 e 9 horas por noite.</p>
+                </div>
+            `;
+
+        } else if (ultimo.horas <= 9) {
+
+            mensagem = `
+                <div class="card">
+                    <h3>✅ Excelente</h3>
+                    <p>Seu tempo de sono está adequado.</p>
+                    <p>Continue mantendo sua rotina atual.</p>
+                </div>
+            `;
+
+        } else {
+
+            mensagem = `
+                <div class="card">
+                    <h3>ℹ️ Observação</h3>
+                    <p>Você está dormindo acima da média.</p>
+                    <p>Observe se existe cansaço excessivo durante o dia.</p>
+                </div>
+            `;
+
+        }
+
+        area.innerHTML = mensagem;
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        document.getElementById("recomendacao").innerHTML = `
+            <div class="card">
+                <p>❌ Erro ao carregar recomendações.</p>
+            </div>
+        `;
+
+    }
+
+}
+
+carregarRecomendacoes();
+
+</script>
+
+</body>
+</html>

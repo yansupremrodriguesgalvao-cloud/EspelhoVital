@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Sono</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <a href="../index.html" class="voltar">
+        ⬅ Voltar ao Dashboard
+    </a>
+
+    <div class="form-card">
+
+        <h2>📖 Histórico de Sono</h2>
+
+        <div id="historicoConteudo">
+            <p>⏳ Carregando registros...</p>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+async function carregarHistorico() {
+
+    try {
+
+        const resposta = await fetch(
+            "http://localhost:8081/sono"
+        );
+
+        const registros = await resposta.json();
+
+        let html = "";
+
+        if (registros.length === 0) {
+
+            html = `
+                <div class="card">
+                    <p>Nenhum registro encontrado.</p>
+                </div>
+            `;
+
+        } else {
+
+            registros.reverse().forEach(item => {
+
+                html += `
+                    <div class="card" style="margin-bottom:20px;">
+
+                        <h3 style="margin-bottom:10px;">
+                            😴 ${item.horas} horas
+                        </h3>
+
+                        <p style="margin-bottom:8px;">
+                            🌟 Qualidade:
+                            ${item.qualidade}
+                        </p>
+
+                        <p>
+                            📅 Data:
+                            ${item.dataRegistro || "Não informada"}
+                        </p>
+
+                    </div>
+                `;
+
+            });
+
+        }
+
+        document.getElementById(
+            "historicoConteudo"
+        ).innerHTML = html;
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        document.getElementById(
+            "historicoConteudo"
+        ).innerHTML = `
+            <div class="card">
+                <p>❌ Erro ao carregar histórico.</p>
+            </div>
+        `;
+
+    }
+
+}
+
+carregarHistorico();
+
+</script>
+
+</body>
+</html>

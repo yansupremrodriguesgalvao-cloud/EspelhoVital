@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Sono</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <a href="../index.html" class="voltar">
+        ⬅ Voltar ao Dashboard
+    </a>
+
+    <div class="form-card">
+
+        <h2>📊 Análise dos Registros</h2>
+
+        <div class="dashboard">
+
+            <div class="card">
+                <h2 id="mediaSono">0</h2>
+                <p>Média de Sono</p>
+            </div>
+
+            <div class="card">
+                <h2 id="totalRegistros">0</h2>
+                <p>Total de Registros</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+async function carregarAnalise() {
+
+    try {
+
+        const resposta =
+            await fetch("http://localhost:8081/sono");
+
+        const registros =
+            await resposta.json();
+
+        let totalHoras = 0;
+
+        registros.forEach(item => {
+            totalHoras += item.horas;
+        });
+
+        let media = 0;
+
+        if(registros.length > 0){
+            media =
+                (totalHoras / registros.length)
+                .toFixed(1);
+        }
+
+        document.getElementById("mediaSono")
+            .textContent = media + "h";
+
+        document.getElementById("totalRegistros")
+            .textContent = registros.length;
+
+    } catch(erro){
+
+        console.error(erro);
+
+    }
+
+}
+
+carregarAnalise();
+
+</script>
+
+</body>
+</html>
