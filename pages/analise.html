@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
 
 <div class="container">
@@ -31,6 +32,16 @@
                 <p>Total de Registros</p>
             </div>
 
+            <div class="card">
+                <h2 id="statusSono">--</h2>
+                <p>Status Geral</p>
+            </div>
+
+        </div>
+
+        <div class="form-card ai-box">
+            <h3>🧠 Análise Inteligente</h3>
+            <p id="iaAnalise">Carregando análise...</p>
         </div>
 
     </div>
@@ -39,42 +50,57 @@
 
 <script>
 
+function avaliarSono(media) {
+
+    if (media < 6) return "🔴 Crítico";
+    if (media < 7) return "🟡 Abaixo do ideal";
+    if (media <= 8.5) return "🟢 Saudável";
+    return "⚠️ Excesso de sono";
+}
+
+function gerarAnalise(media, total) {
+
+    if (total === 0) {
+        return "Nenhum dado registrado ainda.";
+    }
+
+    if (media < 6) {
+        return "Seu padrão indica sono insuficiente. Isso pode afetar foco, humor e energia.";
+    }
+
+    if (media <= 8.5) {
+        return "Seu sono está dentro do padrão saudável. Continue mantendo consistência.";
+    }
+
+    return "Você está dormindo bastante. Verifique rotina e qualidade do descanso.";
+}
+
 async function carregarAnalise() {
 
     try {
 
-        const resposta =
-            await fetch("http://localhost:8081/sono");
+        const res = await fetch("http://localhost:8081/sono");
+        const registros = await res.json();
 
-        const registros =
-            await resposta.json();
+        const total = registros.length;
 
-        let totalHoras = 0;
+        const media = total > 0
+            ? (registros.reduce((s, i) => s + i.horas, 0) / total).toFixed(1)
+            : 0;
 
-        registros.forEach(item => {
-            totalHoras += item.horas;
-        });
+        const status = avaliarSono(media);
 
-        let media = 0;
+        const analise = gerarAnalise(media, total);
 
-        if(registros.length > 0){
-            media =
-                (totalHoras / registros.length)
-                .toFixed(1);
-        }
+        // UI
+        document.getElementById("mediaSono").textContent = media + "h";
+        document.getElementById("totalRegistros").textContent = total;
+        document.getElementById("statusSono").textContent = status;
+        document.getElementById("iaAnalise").textContent = analise;
 
-        document.getElementById("mediaSono")
-            .textContent = media + "h";
-
-        document.getElementById("totalRegistros")
-            .textContent = registros.length;
-
-    } catch(erro){
-
-        console.error(erro);
-
+    } catch (erro) {
+        console.error("Erro análise:", erro);
     }
-
 }
 
 carregarAnalise();

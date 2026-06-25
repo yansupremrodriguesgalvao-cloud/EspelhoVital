@@ -6,9 +6,9 @@
     <title>Gráficos</title>
 
     <link rel="stylesheet" href="../css/style.css">
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
 
 <div class="container">
@@ -33,76 +33,103 @@ async function carregarGrafico() {
 
     try {
 
-        const resposta =
-            await fetch("http://localhost:8081/sono");
+        const res = await fetch("http://localhost:8081/sono");
+        const registros = await res.json();
 
-        const registros =
-            await resposta.json();
+        if (!registros.length) return;
 
-        let excelente = 0;
-        let boa = 0;
-        let regular = 0;
-        let ruim = 0;
+        // ================= CONTADORES =================
+        const contagem = {
+            Excelente: 0,
+            Boa: 0,
+            Regular: 0,
+            Ruim: 0
+        };
 
-        registros.forEach(item => {
-
-            if(item.qualidade === "Excelente"){
-                excelente++;
+        registros.forEach(r => {
+            if (contagem[r.qualidade] !== undefined) {
+                contagem[r.qualidade]++;
             }
-
-            if(item.qualidade === "Boa"){
-                boa++;
-            }
-
-            if(item.qualidade === "Regular"){
-                regular++;
-            }
-
-            if(item.qualidade === "Ruim"){
-                ruim++;
-            }
-
         });
 
-        const ctx =
-            document.getElementById("graficoSono");
+        // ================= CORES MAIS BONITAS =================
+        const cores = [
+            "#22c55e", // excelente
+            "#3b82f6", // boa
+            "#facc15", // regular
+            "#ef4444"  // ruim
+        ];
+
+        const ctx = document.getElementById("graficoSono");
 
         new Chart(ctx, {
 
             type: "bar",
 
             data: {
-
-                labels: [
-                    "Excelente",
-                    "Boa",
-                    "Regular",
-                    "Ruim"
-                ],
+                labels: ["Excelente", "Boa", "Regular", "Ruim"],
 
                 datasets: [{
-
-                    label: "Quantidade",
-
+                    label: "Registros de sono",
                     data: [
-                        excelente,
-                        boa,
-                        regular,
-                        ruim
-                    ]
-
+                        contagem.Excellent ?? 0,
+                        contagem.Boa,
+                        contagem.Regular,
+                        contagem.Ruim
+                    ],
+                    backgroundColor: cores,
+                    borderRadius: 8,
+                    barThickness: 40
                 }]
+            },
 
+            options: {
+
+                responsive: true,
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    },
+
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+
+                                const total =
+                                    Object.values(contagem)
+                                    .reduce((a,b)=>a+b,0);
+
+                                const value = context.raw;
+                                const percent = ((value / total) * 100).toFixed(1);
+
+                                return `${value} registros (${percent}%)`;
+                            }
+                        }
+                    }
+                },
+
+                scales: {
+
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
+                        }
+                    }
+                },
+
+                animation: {
+                    duration: 900,
+                    easing: "easeOutQuart"
+                }
             }
-
         });
 
-    } catch(erro){
-
-        console.error(erro);
-
+    } catch (erro) {
+        console.error("Erro ao carregar gráfico:", erro);
     }
-
 }
 
 carregarGrafico();
