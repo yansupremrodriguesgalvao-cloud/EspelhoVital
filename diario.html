@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diário de Humor (Múltiplo)</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 20px; 
+            box-sizing: border-box;
+        }
+
+        .card { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
+            text-align: center; 
+            width: 100%;       /* MUDANÇA: Ocupa 100% do espaço disponível... */
+            max-width: 450px;  /* MUDANÇA: ...mas não passa de 450px em telas grandes */
+            box-sizing: border-box;
+        }
+
+        h2 { color: #4a148c; margin-bottom: 10px; font-size: 1.6rem; }
+        .sub { color: #666; font-size: 0.9rem; margin-bottom: 20px; }
+        
+        .emojis-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); /* 2 colunas por padrão */
+            gap: 10px; 
+            margin-bottom: 20px; 
+        }
+
+        .emojis-grid button { 
+            font-size: 1rem; 
+            padding: 12px; 
+            cursor: pointer; 
+            border-radius: 10px; 
+            border: 2px solid #eee; 
+            background: white; 
+            text-align: left; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            transition: all 0.2s ease; 
+        }
+
+        .emojis-grid button.selecionado { 
+            border-color: #8e24aa; 
+            background: #f3e5f5; 
+            font-weight: bold; 
+        }
+
+        #btn-salvar { 
+            background: #8e24aa; 
+            color: white; 
+            border: none; 
+            padding: 14px 30px; 
+            font-size: 1rem; 
+            border-radius: 25px; 
+            cursor: pointer; 
+            margin-top: 10px; 
+            width: 100%; 
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(142, 36, 170, 0.3);
+        }
+
+        #btn-salvar:hover { background: #6a1b9a; }
+        
+        .historico-secao { text-align: left; margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
+        .historico-secao h3 { color: #4a148c; font-size: 1.2rem; }
+        ul { list-style: none; padding: 0; max-height: 200px; overflow-y: auto; }
+        
+        li { 
+            background: #fdfbff; 
+            padding: 10px; 
+            margin-bottom: 8px; 
+            border-radius: 8px; 
+            border-left: 4px solid #8e24aa; 
+            font-size: 0.95rem; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+        }
+
+        /* =======================================
+           MUDANÇA: REGRAS PARA CELULARES (Telas pequenas)
+           ======================================= */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px; /* Menos espaço nas bordas da tela do celular */
+            }
+            .card {
+                padding: 20px; /* Menos espaço interno no card */
+            }
+            h2 {
+                font-size: 1.3rem; /* Diminui um pouco o título para não quebrar linha feio */
+            }
+            .emojis-grid {
+                grid-template-columns: 1fr; /* Mágica: Transforma o grid em 1 coluna só no celular */
+            }
+            li {
+                flex-direction: column; /* No histórico do celular, quebra a linha... */
+                align-items: flex-start; /* ...e alinha o texto à esquerda */
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Como você está hoje?</h2>
+        <p class="sub">Selecione até 3 emoções que combinam com seu dia</p>
+        
+        <div class="emojis-grid">
+            <button onclick="alternarHumor(this, '😊 Feliz')"><span>😊</span> Feliz</button>
+            <button onclick="alternarHumor(this, '😐 Neutro')"><span>😐</span> Neutro</button>
+            <button onclick="alternarHumor(this, '😢 Triste')"><span>😢</span> Triste</button>
+            <button onclick="alternarHumor(this, '😡 Irritada')"><span>😡</span> Irritada</button>
+            <button onclick="alternarHumor(this, '😴 Sonolenta')"><span>😴</span> Sonolenta</button>
+            <button onclick="alternarHumor(this, '☕ Cansada')"><span>☕</span> Cansada</button>
+            <button onclick="alternarHumor(this, '✨ Animada')"><span>✨</span> Animada</button>
+            <button onclick="alternarHumor(this, '🧠 Ansiosa')"><span>🧠</span> Ansiosa</button>
+            <button onclick="alternarHumor(this, '🥰 Amada')"><span>🥰</span> Amada</button>
+            <button onclick="alternarHumor(this, '🤡 Rindo de nervoso')"><span>🤡</span> Rindo de nervoso</button>
+        </div>
+
+        <p style="color: #555;">Selecionados: <strong id="humor-status" style="color: #007bff;">Nenhum</strong></p>
+        
+        <button id="btn-salvar" onclick="enviarParaOBackend()">Registrar Humor Diário</button>
+
+        <div class="historico-secao">
+            <h3>Seu Histórico</h3>
+            <ul id="lista-historico"></ul>
+        </div>
+    </div>
+
+    <script>
+        const URL_API = 'http://localhost:8080/api/humor';
+        // Lista para guardar as emoções selecionadas (máximo 3)
+        let humoresSelecionados = [];
+
+        function alternarHumor(botao, humor) {
+            // Se já estava selecionado, remove da lista
+            if (humoresSelecionados.includes(humor)) {
+                humoresSelecionados = humoresSelecionados.filter(h => h !== humor);
+                botao.classList.remove('selecionado');
+            } else {
+                // REQUISITO: Máximo de 3 emoções simultâneas
+                if (humoresSelecionados.length >= 3) {
+                    alert('Você já selecionou o limite máximo de 3 emoções!');
+                    return;
+                }
+                // Adiciona na lista
+                humoresSelecionados.push(humor);
+                botao.classList.add('selecionado');
+            }
+
+            // Atualiza o texto na tela de forma amigável
+            if (humoresSelecionados.length > 0) {
+                document.getElementById('humor-status').innerText = humoresSelecionados.join(', ');
+            } else {
+                document.getElementById('humor-status').innerText = 'Nenhum';
+            }
+        }
+
+        async function enviarParaOBackend() {
+            if (humoresSelecionados.length === 0) {
+                alert('Por favor, selecione pelo menos 1 humor!');
+                return;
+            }
+
+            // Transforma a lista de humores em um único texto separado por vírgulas para enviar ao banco
+            const textoHumor = humoresSelecionados.join(', ');
+
+            const resposta = await fetch(URL_API, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ estado: textoHumor })
+            });
+
+            if (resposta.ok) {
+                alert('Combinação de humores guardada com sucesso!');
+                
+                // Limpa as seleções atuais após salvar
+                humoresSelecionados = [];
+                document.querySelectorAll('.emojis-grid button').forEach(b => b.classList.remove('selecionado'));
+                document.getElementById('humor-status').innerText = 'Nenhum';
+                
+                carregarHistoricoDoBanco();
+            } else {
+                alert('Houve um erro ao salvar o humor.');
+            }
+        }
+
+        async function carregarHistoricoDoBanco() {
+            const resposta = await fetch(URL_API);
+            const dados = await resposta.json();
+            
+            const listaElemento = document.getElementById('lista-historico');
+            listaElemento.innerHTML = '';
+
+            dados.forEach(registro => {
+                listaElemento.innerHTML += `<li><span>${registro.estado}</span> <span style="color:#888; font-size:0.85rem;">${registro.data}</span></li>`;
+            });
+        }
+
+        window.onload = carregarHistoricoDoBanco;
+    </script>
+</body>
+</html>
