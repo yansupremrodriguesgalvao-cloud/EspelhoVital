@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Meu Perfil</title>
+
+<link rel="stylesheet" href="css/perfil-pronto.css">
+<link rel="stylesheet" href="css/sidebar.css">
+
+</head>
+<body>
+
+<div class="ev-dashboard">
+
+    <div class="ev-profile-header">
+
+        <img
+            src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+            class="foto"
+            alt="Usuária"
+        >
+
+        <div class="ev-profile-header-info">
+            <p class="ev-eyebrow">Meu perfil</p>
+            <h1 id="nome"></h1>
+            <p class="ev-subtext" id="email"></p>
+        </div>
+
+        <button class="btn-editar" onclick="editarPerfil()">
+            ✏️ Editar Perfil
+        </button>
+
+        <button class="btn-editar" onclick="window.location.href='pages/reconhecimento-facial.html'">
+            📷 Reconhecimento Facial
+        </button>
+
+    </div>
+
+    <div class="info-grid">
+        <div class="info-item">
+            <span class="info-label">📱 Telefone</span>
+            <span class="info-value" id="telefone"></span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">🎂 Data de Nascimento</span>
+            <span class="info-value" id="dataNascimento"></span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">📍 Cidade</span>
+            <span class="info-value" id="cidade"></span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">⚖️ Peso</span>
+            <span class="info-value"><span id="peso"></span> kg</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">📏 Altura</span>
+            <span class="info-value"><span id="altura"></span> m</span>
+        </div>
+        <div class="info-item">
+            <span class="info-label">🎯 Objetivo</span>
+            <span class="info-value" id="objetivo"></span>
+        </div>
+    </div>
+
+</div>
+
+<script src="js/perfil-pronto.js"></script>
+<script src="js/sidebar.js"></script>
+
+</body>
+</html>

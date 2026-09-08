@@ -1,0 +1,460 @@
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+    
+    }
+    
+    
+    
+    body{
+    
+    
+    background:linear-gradient(
+    135deg,
+    #2E1065,
+    #6D28D9,
+    #C084FC
+    );
+    
+    
+    min-height:100vh;
+    
+    
+    display:flex;
+    
+    
+    justify-content:center;
+    
+    
+    align-items:flex-start;
+    
+    
+    flex-wrap:wrap;
+    
+    
+    gap:40px;
+    
+    
+    padding:20px;
+    
+    
+    }
+    
+    
+    
+    
+    
+    .container{
+    
+    
+    width:500px;
+    
+    
+    max-width:95%;
+    
+    
+    background:white;
+    
+    
+    padding:30px;
+    
+    
+    border-radius:25px;
+    
+    
+    box-shadow:
+    0 5px 20px rgba(0,0,0,.15);
+    
+    
+    }
+    
+    
+    
+    
+    
+    h1{
+    
+    
+    text-align:center;
+    
+    
+    color:#8a63d2;
+    
+    
+    margin-bottom:20px;
+    
+    
+    }
+    
+    
+    
+    
+    
+    .ajuda{
+    
+    
+    color:#777;
+    
+    
+    font-size:14px;
+    
+    
+    line-height:1.5;
+    
+    
+    margin-bottom:20px;
+    
+    
+    }
+    
+    
+    
+    
+    label{
+    
+    
+    display:block;
+    
+    
+    font-weight:bold;
+    
+    
+    color:#555;
+    
+    
+    margin-bottom:10px;
+    
+    
+    }
+    
+    
+    
+    
+    textarea{
+    
+    
+    width:100%;
+    
+    
+    height:100px;
+    
+    
+    padding:12px;
+    
+    
+    border-radius:12px;
+    
+    
+    border:1px solid #dec8ff;
+    
+    
+    margin-bottom:20px;
+    
+    
+    resize:none;
+    
+    
+    }
+    
+    
+    
+    
+    
+    .sintomas{
+    
+    
+    display:grid;
+    
+    
+    grid-template-columns:1fr 1fr;
+    
+    
+    gap:12px;
+    
+    
+    margin-bottom:20px;
+    
+    
+    }
+    
+    
+    
+    
+    .sintoma-card{
+    
+    
+    background:#faf5ff;
+    
+    
+    padding:15px;
+    
+    
+    border-radius:15px;
+    
+    
+    cursor:pointer;
+    
+    
+    transition:.2s;
+    
+    
+    }
+    
+    
+    
+    
+    .sintoma-card:hover{
+    
+    
+    background:#f3e8ff;
+    
+    
+    transform:scale(1.03);
+    
+    
+    }
+    
+    
+    
+    
+    .sintoma-card input{
+    
+    
+    margin-right:8px;
+    
+    
+    }
+    
+    
+    
+    
+    
+    
+    .fluxo{
+    
+    
+    display:flex;
+    
+    
+    gap:10px;
+    
+    
+    margin-bottom:20px;
+    
+    
+    }
+    
+    
+    
+    
+    
+    .fluxo label{
+    
+    
+    flex:1;
+    
+    
+    text-align:center;
+    
+    
+    padding:15px;
+    
+    
+    border-radius:18px;
+    
+    
+    cursor:pointer;
+    
+    
+    }
+    
+    
+    
+    
+    
+    .leve{
+    
+    
+    background:#ffd6e7;
+    
+    
+    }
+    
+    
+    
+    
+    
+    .medio{
+    
+    
+    background:#eadcff;
+    
+    
+    }
+    
+    
+    
+    
+    
+    .intenso{
+    
+    
+    background:#ffcdd2;
+    
+    
+    }
+    
+    
+    
+    
+    
+    button{
+    
+    
+    width:100%;
+    
+    
+    padding:14px;
+    
+    
+    border:none;
+    
+    
+    border-radius:15px;
+    
+    
+    background:#cdb4ff;
+    
+    
+    color:white;
+    
+    
+    font-size:16px;
+    
+    
+    font-weight:bold;
+    
+    
+    cursor:pointer;
+    
+    
+    }
+    
+    
+    
+    
+    
+    button:hover{
+    
+    
+    background:#b79cff;
+    
+    
+    }
+    
+    
+    
+    
+    
+    #mensagem{
+    
+    
+    margin-top:20px;
+    
+    
+    text-align:center;
+    
+    
+    font-weight:bold;
+    
+    
+    }
+    
+    
+    
+    
+    
+    /* RESPONSIVO */
+    
+    
+    @media(max-width:768px){
+    
+    
+    .container{
+    
+    padding:20px;
+    
+    }
+    
+    
+    
+    .sintomas{
+    
+    
+    grid-template-columns:1fr;
+    
+    
+    }
+    
+    
+    
+    .fluxo{
+    
+    
+    flex-direction:column;
+    
+    
+    }
+    
+    
+    
+    h1{
+    
+    
+    font-size:23px;
+    
+    
+    }
+    
+    
+    
+    }
+    
+    
+    
+    @media(max-width:480px){
+    
+    
+    body{
+    
+    
+    padding:10px;
+    
+    
+    }
+    
+    
+    
+    .container{
+    
+    
+    padding:15px;
+    
+    
+    }
+    
+    
+    
+    .sintoma-card{
+    
+    
+    font-size:14px;
+    
+    
+    }
+    
+    
+    }

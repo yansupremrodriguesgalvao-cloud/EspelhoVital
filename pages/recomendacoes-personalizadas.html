@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendações Personalizadas</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+</head>
+<body>
+
+<div class="container">
+
+    <a href="../perfil-pronto.html" class="voltar">
+        ⬅ Voltar ao Dashboard
+    </a>
+
+    <div class="form-card">
+
+        <h2>✨ Recomendações Personalizadas</h2>
+        <p style="opacity:.7; font-size:.88rem; margin-bottom:16px;">
+            Cruzamos seus registros de ciclo, sono e humor para sugerir cuidados
+            feitos sob medida para você.
+        </p>
+
+        <div id="recomendacoesConteudo">
+            <p>⏳ Carregando recomendações...</p>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+async function carregarRecomendacoesPersonalizadas() {
+
+    try {
+
+        const resposta = await fetch("http://localhost:8081/recomendacoes/personalizadas");
+        const dados = await resposta.json();
+
+        const area = document.getElementById("recomendacoesConteudo");
+        const lista = dados.recomendacoes || [];
+
+        if (!lista.length) {
+            area.innerHTML = `<div class="card"><p>Sem recomendações no momento.</p></div>`;
+            return;
+        }
+
+        area.innerHTML = lista.map(texto => `
+            <div class="card" style="margin-bottom:16px; white-space:pre-line;">
+                <p>${texto}</p>
+            </div>
+        `).join("");
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        document.getElementById("recomendacoesConteudo").innerHTML = `
+            <div class="card">
+                <p>❌ Erro ao conectar com o servidor.</p>
+            </div>
+        `;
+    }
+}
+
+carregarRecomendacoesPersonalizadas();
+
+</script>
+
+<script src="../js/sidebar.js"></script>
+
+</body>
+</html>

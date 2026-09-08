@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Registro de Sono</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/sidebar.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <a class="voltar" href="../perfil-pronto.html">⬅ Voltar</a>
+
+    <div class="form-card">
+
+        <h2>😴 Registro de Sono</h2>
+
+        <input 
+            type="number" 
+            id="horas" 
+            placeholder="Horas dormidas (ex: 7.5)"
+            min="0"
+            max="24"
+            step="0.1"
+        >
+
+        <select id="qualidade">
+            <option value="">🤖 Deixar a IA decidir</option>
+            <option value="Excelente">🌟 Excelente</option>
+            <option value="Boa">😊 Boa</option>
+            <option value="Regular">😐 Regular</option>
+            <option value="Ruim">😴 Ruim</option>
+        </select>
+
+        <button onclick="salvarSono()">Salvar registro</button>
+
+        <p id="feedback" style="margin-top:10px; font-size:14px;"></p>
+
+    </div>
+
+    <div class="form-card" style="margin-top:20px;">
+
+        <h2>📖 Histórico de Sono</h2>
+
+        <div id="historicoSonoConteudo">
+            <p>⏳ Carregando registros...</p>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="../js/script.js"></script>
+<script src="../js/sidebar.js"></script>
+
+<script>
+
+async function carregarHistoricoSono() {
+
+    try {
+
+        const usuarioId = localStorage.getItem("usuarioId");
+        const url = usuarioId
+            ? `http://localhost:8081/sono?usuarioId=${usuarioId}`
+            : "http://localhost:8081/sono";
+
+        const resposta = await fetch(url);
+        const registros = await resposta.json();
+
+        let html = "";
+
+        if (registros.length === 0) {
+
+            html = `
+                <div class="card">
+                    <p>Nenhum registro encontrado.</p>
+                </div>
+            `;
+
+        } else {
+
+            registros.slice().reverse().forEach(item => {
+
+                html += `
+                    <div class="card" style="margin-bottom:20px;">
+
+                        <h3 style="margin-bottom:10px;">
+                            😴 ${item.horas} horas
+                        </h3>
+
+                        <p style="margin-bottom:8px;">
+                            🌟 Qualidade:
+                            ${item.qualidade}
+                        </p>
+
+                        <p>
+                            📅 Data:
+                            ${item.dataRegistro || "Não informada"}
+                        </p>
+
+                    </div>
+                `;
+
+            });
+
+        }
+
+        document.getElementById("historicoSonoConteudo").innerHTML = html;
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        document.getElementById("historicoSonoConteudo").innerHTML = `
+            <div class="card">
+                <p>❌ Erro ao carregar histórico.</p>
+            </div>
+        `;
+
+    }
+
+}
+
+carregarHistoricoSono();
+
+</script>
+
+</body>
+</html>

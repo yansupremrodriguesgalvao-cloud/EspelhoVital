@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico Menstrual</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+</head>
+<body>
+
+<div class="container">
+
+    <a href="../perfil-pronto.html" class="voltar">
+        ⬅ Voltar ao Dashboard
+    </a>
+
+    <div class="form-card">
+
+        <h2>📅 Histórico Menstrual</h2>
+        <p style="opacity:.7; font-size:.88rem; margin-bottom:16px;">
+            Veja todos os ciclos que você já registrou e como eles evoluíram.
+        </p>
+
+        <div id="historicoConteudo">
+            <p>⏳ Carregando registros...</p>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+async function carregarHistoricoMenstrual() {
+
+    try {
+
+        const resposta = await fetch("http://localhost:8081/ciclo");
+        const registros = await resposta.json();
+
+        const area = document.getElementById("historicoConteudo");
+
+        if (!registros.length) {
+            area.innerHTML = `
+                <div class="card">
+                    <p>Nenhum ciclo registrado ainda.</p>
+                    <p style="margin-top:10px;">
+                        <a href="ciclo.html" style="color:#c084fc;">➕ Registrar meu primeiro ciclo</a>
+                    </p>
+                </div>
+            `;
+            return;
+        }
+
+        let html = "";
+
+        registros.slice().reverse().forEach(c => {
+
+            html += `
+                <div class="card" style="margin-bottom:20px;">
+
+                    <h3 style="margin-bottom:10px;">
+                        🌸 Última menstruação: ${formatarData(c.dataUltimaMenstruacao)}
+                    </h3>
+
+                    <p><strong>Duração do ciclo:</strong> ${c.duracaoCiclo ?? "--"} dias</p>
+                    <p><strong>Duração da menstruação:</strong> ${c.duracaoMenstruacao ?? "--"} dias</p>
+                    <p><strong>Próxima menstruação prevista:</strong> ${formatarData(c.proximaMenstruacao)}</p>
+                    <p><strong>Ovulação prevista:</strong> ${formatarData(c.ovulacao)}</p>
+                    <p><strong>Período fértil:</strong> ${formatarData(c.inicioPeriodoFertil)} a ${formatarData(c.fimPeriodoFertil)}</p>
+
+                </div>
+            `;
+        });
+
+        area.innerHTML = html;
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        document.getElementById("historicoConteudo").innerHTML = `
+            <div class="card">
+                <p>❌ Erro ao conectar com o servidor.</p>
+            </div>
+        `;
+    }
+}
+
+function formatarData(dataIso) {
+    if (!dataIso) return "--";
+    const [ano, mes, dia] = dataIso.split("-");
+    return `${dia}/${mes}/${ano}`;
+}
+
+carregarHistoricoMenstrual();
+
+</script>
+
+<script src="../js/sidebar.js"></script>
+
+</body>
+</html>

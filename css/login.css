@@ -1,0 +1,148 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI', sans-serif;
+}
+
+body{
+    height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(
+        135deg,
+        #d8b4fe,
+        #f3e8ff
+    );
+}
+
+.container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.login-card{
+    width:420px;
+
+    background:#fff;
+
+    padding:40px;
+
+    border-radius:20px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.15);
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.logo-img{
+    width:72px;
+    height:72px;
+    object-fit:contain;
+    margin-bottom:8px;
+}
+
+.logo h1{
+    color:#8b5cf6;
+    margin-bottom:10px;
+}
+
+.logo p{
+    color:#777;
+}
+
+.input-group{
+    margin-bottom:18px;
+}
+
+label{
+    display:block;
+    margin-bottom:5px;
+    font-weight:600;
+}
+
+input{
+    width:100%;
+    padding:14px;
+
+    border:2px solid #e9d5ff;
+    border-radius:10px;
+
+    font-size:15px;
+}
+
+input:focus{
+    outline:none;
+
+    border-color:#8b5cf6;
+
+    box-shadow:
+    0 0 10px rgba(139,92,246,.2);
+}
+
+button{
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    transition:.3s;
+}
+
+.btn-login{
+    background:#8b5cf6;
+    color:white;
+    margin-top:10px;
+}
+
+.btn-login:hover{
+    background:#7c3aed;
+}
+
+.btn-cadastro{
+    background:#ede9fe;
+    color:#6d28d9;
+    margin-top:10px;
+}
+
+.btn-cadastro:hover{
+    background:#ddd6fe;
+}
+
+#mensagem{
+    margin-top:15px;
+    text-align:center;
+    font-weight:bold;
+}
+.esqueci-link{
+    text-align:center;
+    margin-top:12px;
+}
+
+.esqueci-link a{
+    color:#8b5cf6;
+    font-size:14px;
+    text-decoration:none;
+}
+
+.esqueci-link a:hover{
+    text-decoration:underline;
+}

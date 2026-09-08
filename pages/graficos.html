@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráficos</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="../perfil-pronto.html" class="voltar">
+        ⬅ Voltar ao Dashboard
+    </a>
+
+    <div class="form-card">
+
+        <h2>📈 Qualidade do Sono</h2>
+
+        <canvas id="graficoSono"></canvas>
+
+    </div>
+
+</div>
+
+<script>
+
+async function carregarGrafico() {
+
+    try {
+
+        const res = await fetch("http://localhost:8081/sono");
+        const registros = await res.json();
+
+        if (!registros.length) return;
+
+        // ================= CONTADORES =================
+        const contagem = {
+            Excelente: 0,
+            Boa: 0,
+            Regular: 0,
+            Ruim: 0
+        };
+
+        registros.forEach(r => {
+            if (contagem[r.qualidade] !== undefined) {
+                contagem[r.qualidade]++;
+            }
+        });
+
+        // ================= CORES MAIS BONITAS =================
+        const cores = [
+            "#22c55e", // excelente
+            "#3b82f6", // boa
+            "#facc15", // regular
+            "#ef4444"  // ruim
+        ];
+
+        const ctx = document.getElementById("graficoSono");
+
+        new Chart(ctx, {
+
+            type: "bar",
+
+            data: {
+                labels: ["Excelente", "Boa", "Regular", "Ruim"],
+
+                datasets: [{
+                    label: "Registros de sono",
+                    data: [
+                        contagem.Excelente,
+                        contagem.Boa,
+                        contagem.Regular,
+                        contagem.Ruim
+                    ],
+                    backgroundColor: cores,
+                    borderRadius: 8,
+                    barThickness: 40
+                }]
+            },
+
+            options: {
+
+                responsive: true,
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    },
+
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+
+                                const total =
+                                    Object.values(contagem)
+                                    .reduce((a,b)=>a+b,0);
+
+                                const value = context.raw;
+                                const percent = ((value / total) * 100).toFixed(1);
+
+                                return `${value} registros (${percent}%)`;
+                            }
+                        }
+                    }
+                },
+
+                scales: {
+
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
+                        }
+                    }
+                },
+
+                animation: {
+                    duration: 900,
+                    easing: "easeOutQuart"
+                }
+            }
+        });
+
+    } catch (erro) {
+        console.error("Erro ao carregar gráfico:", erro);
+    }
+}
+
+carregarGrafico();
+
+</script>
+<script src="../js/sidebar.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultas e Exames</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/consultas.css">
+</head>
+<body>
+
+<div class="container">
+
+    <a href="../perfil-pronto.html" class="voltar">
+        ⬅ Voltar ao Dashboard
+    </a>
+
+    <div class="form-card">
+
+        <h2>🩺 Consultas e Exames</h2>
+        <p class="ajuda">Cadastre consultas médicas e exames para receber lembretes por aqui.</p>
+
+        <form id="consultaForm">
+
+            <label>Tipo</label>
+            <select id="tipo" required>
+                <option value="CONSULTA">🩺 Consulta</option>
+                <option value="EXAME">🧪 Exame</option>
+            </select>
+
+            <label>Título</label>
+            <input type="text" id="titulo" placeholder="Ex: Consulta com ginecologista" required>
+
+            <label>Data</label>
+            <input type="date" id="dataAgendada" required>
+
+            <label>Hora (opcional)</label>
+            <input type="time" id="horaAgendada">
+
+            <label>Local / Clínica (opcional)</label>
+            <input type="text" id="local" placeholder="Ex: Clínica Vital">
+
+            <label>Profissional (opcional)</label>
+            <input type="text" id="profissional" placeholder="Ex: Dra. Ana Souza">
+
+            <label>Avisar com quantos dias de antecedência?</label>
+            <select id="lembreteDiasAntes">
+                <option value="0">No dia</option>
+                <option value="1" selected>1 dia antes</option>
+                <option value="2">2 dias antes</option>
+                <option value="3">3 dias antes</option>
+                <option value="7">1 semana antes</option>
+            </select>
+
+            <label>Observações (opcional)</label>
+            <input type="text" id="observacao" placeholder="Ex: Levar exames anteriores">
+
+            <button type="submit">💾 Salvar compromisso</button>
+        </form>
+
+        <p id="feedback" style="margin-top:10px; font-size:14px;"></p>
+
+    </div>
+
+    <div class="form-card" style="margin-top:24px;">
+        <h2>📋 Próximos compromissos</h2>
+        <div id="listaProximas"><p class="vazio">Carregando...</p></div>
+    </div>
+
+    <div class="form-card" style="margin-top:24px;">
+        <h2>📖 Histórico</h2>
+        <div id="listaHistorico"><p class="vazio">Carregando...</p></div>
+    </div>
+
+</div>
+
+<script src="../js/consultas.js"></script>
+<script src="../js/sidebar.js"></script>
+
+</body>
+</html>

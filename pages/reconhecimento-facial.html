@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reconhecimento Facial</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/facial.css">
+
+    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <a href="../perfil-detalhes.html" class="voltar">
+        ⬅ Voltar ao Perfil
+    </a>
+
+    <div class="form-card facial-card">
+
+        <h2>📷 Reconhecimento Facial</h2>
+        <p class="ajuda">
+            Cadastre seu rosto para poder entrar no Espelho Vital sem digitar a senha.
+            O reconhecimento acontece direto no seu navegador — nenhuma foto é enviada,
+            apenas um código matemático do seu rosto (descritor facial).
+        </p>
+
+        <div class="facial-video-wrap">
+            <video id="video" autoplay muted playsinline></video>
+            <div id="facialOverlayMsg" class="facial-overlay-msg">⏳ Carregando modelos de reconhecimento...</div>
+        </div>
+
+        <button id="btnCapturar" disabled>📸 Capturar e salvar meu rosto</button>
+
+        <p id="facialFeedback" style="margin-top:10px; font-size:14px;"></p>
+
+    </div>
+
+</div>
+
+<script src="../js/facial.js"></script>
+<script src="../js/sidebar.js"></script>
+
+</body>
+</html>

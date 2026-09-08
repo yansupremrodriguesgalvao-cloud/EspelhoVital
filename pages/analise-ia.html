@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise Inteligente</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="../perfil-pronto.html" class="voltar">
+        ⬅ Voltar ao Dashboard
+    </a>
+
+    <div class="form-card">
+
+        <h2>🤖 Análise Inteligente de Dados</h2>
+        <p style="opacity:.7; font-size:.88rem; margin-bottom:16px;">
+            Motor de análise que cruza seus registros de sono, humor e ciclo
+            para encontrar padrões. É baseado em estatística e regras sobre os
+            seus próprios dados — não substitui avaliação médica.
+        </p>
+
+        <div class="dashboard">
+
+            <div class="card">
+                <h2 id="mediaSono">--</h2>
+                <p>Média de Sono</p>
+            </div>
+
+            <div class="card">
+                <h2 id="percentualRuim">--</h2>
+                <p>Noites "Ruim"</p>
+            </div>
+
+            <div class="card">
+                <h2 id="totalHumor">--</h2>
+                <p>Registros de Humor</p>
+            </div>
+
+        </div>
+
+        <div class="form-card ai-box">
+            <h3>🧠 Insights</h3>
+            <div id="listaInsights"><p>Carregando análise...</p></div>
+        </div>
+
+        <div class="form-card" style="margin-top:20px;">
+            <h3 style="margin-bottom:14px;">📊 Distribuição de Humor</h3>
+            <canvas id="graficoHumor"></canvas>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="../js/analise-ia.js"></script>
+<script src="../js/sidebar.js"></script>
+
+</body>
+</html>

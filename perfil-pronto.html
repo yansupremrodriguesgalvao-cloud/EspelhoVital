@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Início</title>
+
+<link rel="stylesheet" href="css/perfil-pronto.css">
+<link rel="stylesheet" href="css/sidebar.css">
+<link rel="stylesheet" href="css/dashboard.css">
+
+</head>
+<body>
+
+<div class="ev-dashboard">
+
+    <div class="ev-welcome">
+        <p class="ev-eyebrow">Que bom te ver por aqui</p>
+        <h1 id="saudacao">Olá! 👋</h1>
+        <p class="ev-welcome-sub">
+            Este é o seu painel de acompanhamento da saúde. Aqui você vê, num
+            só lugar, seu ciclo, seu sono, seu humor e seus próximos compromissos.
+        </p>
+    </div>
+
+    <div id="ev-alertas" class="ev-alertas" style="display:none;"></div>
+
+    <div class="ev-cards-grid">
+
+        <a href="pages/ciclo.html" class="ev-card">
+            <div class="ev-card-icon">🌸</div>
+            <div class="ev-card-label">Fase do ciclo</div>
+            <div class="ev-card-value" id="cardFaseCiclo">--</div>
+            <div class="ev-card-sub" id="cardProximaMenstruacao">Sem dados ainda</div>
+        </a>
+
+        <a href="pages/historico.html" class="ev-card">
+            <div class="ev-card-icon">😴</div>
+            <div class="ev-card-label">Média de sono</div>
+            <div class="ev-card-value" id="cardMediaSono">--</div>
+            <div class="ev-card-sub" id="cardTotalSono">Sem registros ainda</div>
+        </a>
+
+        <a href="pages/humor.html" class="ev-card">
+            <div class="ev-card-icon">😊</div>
+            <div class="ev-card-label">Último humor</div>
+            <div class="ev-card-value" id="cardUltimoHumor">--</div>
+            <div class="ev-card-sub" id="cardDataHumor">Sem registros ainda</div>
+        </a>
+
+        <a href="pages/consultas.html" class="ev-card">
+            <div class="ev-card-icon">🩺</div>
+            <div class="ev-card-label">Próximos compromissos</div>
+            <div class="ev-card-value" id="cardTotalConsultas">--</div>
+            <div class="ev-card-sub">Consultas e exames agendados</div>
+        </a>
+
+    </div>
+
+    <div class="ev-section-box">
+        <h2>🗓️ Próximas consultas e exames</h2>
+        <div id="ev-lista-consultas">
+            <p class="ev-vazio">Carregando...</p>
+        </div>
+    </div>
+
+    <div class="ev-quick-links">
+        <a href="pages/analise-ia.html" class="ev-quick-link">🤖 Análise Inteligente</a>
+        <a href="pages/recomendacoes-personalizadas.html" class="ev-quick-link">✨ Recomendações Personalizadas</a>
+        <a href="pages/consultas.html" class="ev-quick-link">🩺 Gerenciar Consultas</a>
+        <a href="pages/assistant.html" class="ev-quick-link">🧠 Assistente Vital</a>
+    </div>
+
+</div>
+
+<script>
+    const nomeUsuario = localStorage.getItem("usuarioNome");
+    if (nomeUsuario) {
+        document.getElementById("saudacao").innerText = "Olá, " + nomeUsuario + "! 👋";
+    }
+</script>
+
+<script src="js/dashboard.js"></script>
+<script src="js/sidebar.js"></script>
+
+</body>
+</html>

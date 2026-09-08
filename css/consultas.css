@@ -1,0 +1,78 @@
+.ajuda{
+    opacity:.7;
+    font-size:.88rem;
+    margin-bottom:16px;
+}
+
+.vazio{
+    opacity:.6;
+    font-size:.9rem;
+}
+
+.consulta-card{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:16px;
+    padding:16px 18px;
+    margin-bottom:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+.consulta-info h3{
+    font-size:1rem;
+    margin-bottom:4px;
+}
+
+.consulta-info p{
+    font-size:.85rem;
+    opacity:.75;
+    margin:2px 0;
+}
+
+.consulta-tag{
+    font-size:.72rem;
+    padding:4px 10px;
+    border-radius:999px;
+    background:rgba(124,58,237,.25);
+    border:1px solid rgba(124,58,237,.5);
+    font-weight:600;
+    white-space:nowrap;
+}
+
+.consulta-acoes{
+    display:flex;
+    gap:8px;
+    flex-shrink:0;
+}
+
+.consulta-acoes button{
+    width:auto;
+    padding:8px 12px;
+    font-size:.78rem;
+    margin-bottom:0;
+}
+
+.btn-realizada{
+    background:#16a34a !important;
+}
+
+.btn-cancelar{
+    background:#dc2626 !important;
+}
+
+.btn-excluir{
+    background:rgba(255,255,255,.12) !important;
+}
+
+.status-realizada{
+    opacity:.55;
+}
+
+.status-cancelada{
+    opacity:.4;
+    text-decoration:line-through;
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/facial.css">
+
+    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="login-card">
+
+            <div class="logo">
+                <img src="../assets/logo.png" alt="Espelho Vital" class="logo-img">
+                <h1>Espelho Vital</h1>
+                <p>Entre na sua conta</p>
+            </div>
+
+            <form id="loginForm">
+
+                <div class="input-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="Digite seu e-mail" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" placeholder="Digite sua senha" required>
+                </div>
+
+                <button type="submit" class="btn-login">Entrar</button>
+
+            </form>
+
+            <p class="esqueci-link">
+                <a href="recuperar-senha.html">Esqueci minha senha</a>
+            </p>
+
+            <p id="mensagem"></p>
+
+            <button class="btn-cadastro" id="btnAbrirFacial" type="button">📷 Entrar com reconhecimento facial</button>
+
+            <div id="facialLoginBox" style="display:none; margin-top:14px;">
+                <div class="facial-video-wrap" style="max-width:100%;">
+                    <video id="video" autoplay muted playsinline></video>
+                    <div id="facialOverlayMsg" class="facial-overlay-msg">⏳ Carregando modelos de reconhecimento...</div>
+                </div>
+                <button id="btnCapturarLogin" type="button" disabled>📸 Reconhecer meu rosto</button>
+                <p id="facialFeedback" style="font-size:14px;"></p>
+            </div>
+
+            <button class="btn-cadastro" onclick="irCadastro()">Criar conta</button>
+
+        </div>
+    </div>
+
+    <script src="../js/login.js"></script>
+    <script src="../js/login-facial.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Humor</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .voltar {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.15);
+            color: #333;
+        }
+
+        h2{
+            text-align:center;
+            color:#4a148c;
+        }
+
+        .sub{
+            text-align:center;
+            color:#666;
+            margin-bottom:20px;
+        }
+
+        input{
+            width:100%;
+            padding:12px;
+            margin-bottom:20px;
+            border-radius:10px;
+            border:1px solid #ccc;
+            box-sizing:border-box;
+            font-size:16px;
+        }
+
+        .emojis-grid{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:10px;
+        }
+
+        .emojis-grid button{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            padding:12px;
+            font-size:15px;
+            cursor:pointer;
+            border-radius:10px;
+            border:2px solid #eee;
+            background:#fcfcfc;
+            color:#333;
+            transition:.2s ease;
+        }
+
+        .emojis-grid button:hover{
+            transform:translateY(-1px);
+            border-color:#c084fc;
+            box-shadow:0 4px 12px rgba(142,36,170,.12);
+        }
+
+        .selecionado{
+            background:#f3e5f5 !important;
+            border-color:#8e24aa !important;
+        }
+
+        #humor-status{
+            color:#6d28d9;
+        }
+
+        #btn-salvar{
+            width:100%;
+            margin-top:20px;
+            padding:15px;
+            border:none;
+            border-radius:30px;
+            background:#8e24aa;
+            color:white;
+            cursor:pointer;
+            font-size:17px;
+            font-weight:bold;
+        }
+
+        #btn-salvar:hover{
+            background:#6a1b9a;
+        }
+
+        #btn-salvar:disabled{
+            background:#ccc;
+            cursor:not-allowed;
+        }
+
+        .historico{
+            margin-top:40px;
+        }
+
+        .historico h3{
+            color:#4a148c;
+        }
+
+        ul{
+            list-style:none;
+            padding:0;
+        }
+
+        li{
+            background:#fafafa;
+            margin-bottom:10px;
+            padding:12px;
+            border-left:5px solid #8e24aa;
+            border-radius:8px;
+            color:#333;
+        }
+
+        li strong{
+            color:#4a148c;
+        }
+
+        li small{
+            color:#888;
+        }
+
+        @media(max-width:600px){
+
+            .emojis-grid{
+                grid-template-columns:1fr;
+            }
+
+            .card{
+                padding:20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<a href="../perfil-pronto.html" class="voltar">
+⬅ Voltar ao Dashboard
+</a>
+
+<div class="card">
+
+<h2>😊 Registro de Humor</h2>
+
+<p class="sub">
+Selecione quantas emoções quiser e escreva como foi seu dia.
+</p>
+
+<input
+type="text"
+id="observacao"
+placeholder="Como você está se sentindo hoje?"
+>
+
+<div class="emojis-grid">
+
+<button onclick="alternarHumor(this,'😊 Feliz')">
+😊 Feliz
+</button>
+
+<button onclick="alternarHumor(this,'😐 Neutro')">
+😐 Neutro
+</button>
+
+<button onclick="alternarHumor(this,'😢 Triste')">
+😢 Triste
+</button>
+
+<button onclick="alternarHumor(this,'😡 Irritada')">
+😡 Irritada
+</button>
+
+<button onclick="alternarHumor(this,'😴 Sonolenta')">
+😴 Sonolenta
+</button>
+
+<button onclick="alternarHumor(this,'☕ Cansada')">
+☕ Cansada
+</button>
+
+<button onclick="alternarHumor(this,'✨ Animada')">
+✨ Animada
+</button>
+
+<button onclick="alternarHumor(this,'🧠 Ansiosa')">
+🧠 Ansiosa
+</button>
+
+<button onclick="alternarHumor(this,'🥰 Amada')">
+🥰 Amada
+</button>
+
+<button onclick="alternarHumor(this,'🤡 Rindo de nervoso')">
+🤡 Rindo de nervoso
+</button>
+
+</div>
+
+<p>
+
+Selecionados:
+
+<strong id="humor-status">
+Nenhum
+</strong>
+
+</p>
+
+<button
+id="btn-salvar"
+onclick="enviarParaOBackend()">
+Salvar Registro
+</button>
+
+<div class="historico">
+
+<h3>
+Histórico
+</h3>
+    <ul id="lista-historico"></ul>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+    // ⚠️ Troque pela URL real da sua API/backend
+    const URL_API = "http://localhost:8081/humor";
+    // Array que guarda os humores marcados
+    let humoresSelecionados = [];
+
+    // Alterna a seleção de um humor ao clicar no botão
+    function alternarHumor(botao, humor){
+
+        const jaSelecionado = humoresSelecionados.includes(humor);
+
+        if(jaSelecionado){
+
+            // Remove da lista e desmarca visualmente
+            humoresSelecionados = humoresSelecionados.filter(h => h !== humor);
+            botao.classList.remove("selecionado");
+
+        } else {
+
+            // Adiciona à lista e marca visualmente
+            humoresSelecionados.push(humor);
+            botao.classList.add("selecionado");
+
+        }
+
+        atualizarStatus();
+
+    }
+
+    // Atualiza o texto "Selecionados: ..."
+    function atualizarStatus(){
+
+        const status = document.getElementById("humor-status");
+
+        status.innerText = humoresSelecionados.length === 0
+            ? "Nenhum"
+            : humoresSelecionados.join(", ");
+
+    }
+
+    async function enviarParaOBackend(){
+
+        if(humoresSelecionados.length===0){
+
+            alert("Selecione pelo menos um humor.");
+
+            return;
+
+        }
+
+        const observacao=document.getElementById("observacao").value;
+
+        const textoHumor=humoresSelecionados.join(", ");
+
+        const usuarioId = localStorage.getItem("usuarioId");
+
+        const btnSalvar = document.getElementById("btn-salvar");
+        btnSalvar.disabled = true;
+        btnSalvar.innerText = "Salvando...";
+
+        try{
+
+            const resposta=await fetch(URL_API,{
+
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify({
+
+                    estado:textoHumor,
+
+                    observacao:observacao,
+
+                    usuarioId: usuarioId ? Number(usuarioId) : null
+
+                })
+
+            });
+
+            if(resposta.ok){
+
+                alert("Registro salvo com sucesso!");
+
+                humoresSelecionados=[];
+
+                document.getElementById("observacao").value="";
+
+                document.getElementById("humor-status").innerText="Nenhum";
+
+                document.querySelectorAll(".emojis-grid button").forEach(botao=>{
+
+                    botao.classList.remove("selecionado");
+
+                });
+
+                carregarHistoricoDoBanco();
+
+            }else{
+
+                alert("Erro ao salvar o registro.");
+
+            }
+
+        }catch(erro){
+
+            console.error(erro);
+
+            alert("Erro ao conectar com o servidor.");
+
+        }finally{
+
+            btnSalvar.disabled = false;
+            btnSalvar.innerText = "Salvar Registro";
+
+        }
+
+    }
+
+    async function carregarHistoricoDoBanco(){
+
+        try{
+
+            const usuarioId = localStorage.getItem("usuarioId");
+
+            const url = usuarioId
+                ? `${URL_API}?usuarioId=${usuarioId}`
+                : URL_API;
+
+            const resposta=await fetch(url);
+
+            const dados=await resposta.json();
+
+            const lista=document.getElementById("lista-historico");
+
+            lista.innerHTML="";
+
+            dados.reverse().forEach(registro=>{
+
+                const li=document.createElement("li");
+
+                li.innerHTML=`
+                    <strong>${registro.estado}</strong><br>
+                    ${registro.observacao ?? ""}<br>
+                    <small>${registro.dataRegistro ?? ""}</small>
+                `;
+
+                lista.appendChild(li);
+
+            });
+
+        }catch(erro){
+
+            console.error(erro);
+
+        }
+
+    }
+
+    window.onload=carregarHistoricoDoBanco;
+
+    </script>
+    <script src="../js/sidebar.js"></script>
+
+    </body>
+
+    </html>

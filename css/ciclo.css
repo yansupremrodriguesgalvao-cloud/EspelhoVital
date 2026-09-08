@@ -1,0 +1,959 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+
+body{
+
+    background:linear-gradient(
+        135deg,
+        #2E1065,
+        #4C1D95,
+        #6D28D9,
+        #A855F7
+    );
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    min-height:100vh;
+
+    padding:20px;
+
+}
+
+
+
+.container{
+
+    width:900px;
+    max-width:95%;
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    box-shadow:
+    0 5px 20px rgba(0,0,0,0.1);
+
+}
+
+
+
+h1{
+
+    text-align:center;
+
+    color:#8a63d2;
+
+    margin-bottom:25px;
+
+}
+
+
+
+label{
+
+    display:block;
+
+    margin-bottom:5px;
+
+    font-weight:bold;
+
+    color:#555;
+
+}
+
+
+
+input,
+select{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-bottom:15px;
+
+    border:1px solid #d8c8ff;
+
+    border-radius:10px;
+
+    outline:none;
+
+    font-size:14px;
+
+    background:white;
+
+    color:#333;
+
+}
+
+
+
+input:focus,
+select:focus{
+
+    border-color:#b79cff;
+
+}
+
+
+
+.ajuda{
+
+    color:#777;
+
+    font-size:13px;
+
+    margin-bottom:16px;
+
+    line-height:1.5;
+
+}
+
+
+
+button{
+
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#cdb4ff;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+
+
+button:hover{
+
+    background:#b79cff;
+
+}
+
+
+
+.btn-secundario{
+
+    margin-top:12px;
+
+    background:#f3e8ff;
+
+    color:#6d28d9;
+
+}
+
+
+
+
+
+#resultado{
+
+    margin-top:20px;
+
+    padding:15px;
+
+    background:#f8f4ff;
+
+    border-radius:10px;
+
+}
+
+
+
+
+
+/* ================= CALENDÁRIO ================= */
+
+
+
+#calendarioContainer{
+
+    margin-top:40px;
+
+}
+
+
+
+
+
+.calendario-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+
+
+
+
+.calendario-header button{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    padding:0;
+
+}
+
+
+
+
+
+.calendario-header h2{
+
+    color:#8a63d2;
+
+}
+
+
+
+
+
+
+.dias-semana{
+
+    display:grid;
+
+    grid-template-columns:repeat(7,1fr);
+
+    text-align:center;
+
+    font-weight:bold;
+
+    color:#666;
+
+    margin-bottom:15px;
+
+}
+
+
+
+
+
+
+.calendario{
+
+    display:grid;
+
+    grid-template-columns:repeat(7,1fr);
+
+    gap:12px;
+
+}
+
+
+
+
+
+/* BOLINHAS DOS DIAS */
+
+
+
+.dia{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin:auto;
+
+    font-weight:bold;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    background:#efefef;
+
+    color:#444;
+
+}
+
+
+
+.dia:hover{
+
+    transform:scale(1.1);
+
+}
+
+
+
+
+
+/* DIA NORMAL */
+
+.normal{
+
+    background:#efefef;
+
+}
+
+
+
+
+
+/* MENSTRUAÇÃO */
+
+.menstruacao{
+
+    background:#ffd6e7;
+
+    color:#c2185b;
+
+}
+
+
+
+
+
+/* PERÍODO FÉRTIL */
+
+.fertil{
+
+    background:#d9f2ff;
+
+    color:#1976d2;
+
+}
+
+
+
+
+
+/* OVULAÇÃO */
+
+.ovulacao{
+
+    background:#ead8ff;
+
+    color:#6d28d9;
+
+}
+
+
+
+
+
+/* LEGENDA */
+
+
+
+.legenda{
+
+    margin-top:30px;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:25px;
+
+    flex-wrap:wrap;
+
+}
+
+
+
+.item-legenda{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+
+
+.cor{
+
+    width:18px;
+
+    height:18px;
+
+    border-radius:50%;
+
+}
+
+
+
+.cor.normal{
+
+    background:#efefef;
+
+}
+
+
+
+.cor.menstruacao{
+
+    background:#ffd6e7;
+
+}
+
+
+
+.cor.fertil{
+
+    background:#d9f2ff;
+
+}
+
+
+
+.cor.ovulacao{
+
+    background:#ead8ff;
+
+}
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+    
+    }
+    
+    
+    
+    body{
+    
+    background:linear-gradient(
+    135deg,
+    #2E1065,
+    #6D28D9,
+    #C084FC
+    );
+    
+    
+    min-height:100vh;
+    
+    display:flex;
+    
+    justify-content:center;
+    
+    align-items:center;
+    
+    padding:20px;
+    
+    }
+    
+    
+    
+    .container{
+    
+    width:500px;
+    
+    max-width:95%;
+    
+    background:white;
+    
+    padding:30px;
+    
+    border-radius:25px;
+    
+    box-shadow:
+    0 5px 20px rgba(0,0,0,.15);
+    
+    }
+    
+    
+    
+    h1{
+    
+    text-align:center;
+    
+    color:#8a63d2;
+    
+    margin-bottom:20px;
+    
+    }
+    
+    
+    
+    .ajuda{
+    
+    color:#777;
+    
+    font-size:14px;
+    
+    line-height:1.5;
+    
+    margin-bottom:20px;
+    
+    }
+    
+    
+    
+    label{
+    
+    display:block;
+    
+    font-weight:bold;
+    
+    color:#555;
+    
+    margin-bottom:8px;
+    
+    }
+    
+    
+    
+    input[type="date"],
+    
+    textarea{
+    
+    
+    width:100%;
+    
+    padding:12px;
+    
+    border-radius:12px;
+    
+    border:1px solid #dec8ff;
+    
+    margin-bottom:20px;
+    
+    }
+    
+    
+    
+    textarea{
+    
+    height:100px;
+    
+    resize:none;
+    
+    }
+    
+    
+    
+    
+    .sintomas{
+    
+    display:grid;
+    
+    grid-template-columns:1fr 1fr;
+    
+    gap:12px;
+    
+    margin-bottom:20px;
+    
+    }
+    
+    
+    
+    
+    .sintoma-card{
+    
+    background:#faf5ff;
+    
+    padding:14px;
+    
+    border-radius:15px;
+    
+    cursor:pointer;
+    
+    transition:.2s;
+    
+    }
+    
+    
+    
+    .sintoma-card:hover{
+    
+    background:#f3e8ff;
+    
+    transform:scale(1.03);
+    
+    }
+    
+    
+    
+    
+    .sintoma-card input{
+    
+    margin-right:8px;
+    
+    }
+    
+    
+    
+    
+    
+    .fluxo{
+    
+    display:flex;
+    
+    gap:10px;
+    
+    margin-bottom:20px;
+    
+    }
+    
+    
+    
+    
+    .fluxo label{
+    
+    flex:1;
+    
+    text-align:center;
+    
+    padding:15px;
+    
+    border-radius:18px;
+    
+    cursor:pointer;
+    
+    }
+    
+    
+    
+    
+    
+    .leve{
+    
+    background:#ffd6e7;
+    
+    }
+    
+    
+    
+    
+    
+    .medio{
+    
+    background:#e9ddff;
+    
+    }
+    
+    
+    
+    
+    
+    .intenso{
+    
+    background:#ffcdd2;
+    
+    }
+    
+    
+    
+    
+    
+    button{
+    
+    width:100%;
+    
+    padding:14px;
+    
+    border:none;
+    
+    border-radius:15px;
+    
+    background:#cdb4ff;
+    
+    color:white;
+    
+    font-size:16px;
+    
+    font-weight:bold;
+    
+    cursor:pointer;
+    
+    }
+    
+    
+    
+    button:hover{
+    
+    background:#b79cff;
+    
+    }
+    
+    
+    
+    
+    #mensagem{
+    
+    margin-top:20px;
+    
+    text-align:center;
+    
+    font-weight:bold;
+    
+    }
+    /* ================= RESPONSIVIDADE ================= */
+
+
+@media (max-width: 768px){
+
+
+    body{
+
+        padding:15px;
+
+        align-items:flex-start;
+
+    }
+
+
+
+    .container{
+
+        width:100%;
+
+        padding:20px;
+
+        border-radius:20px;
+
+    }
+
+
+
+    h1{
+
+        font-size:24px;
+
+    }
+
+
+
+    .sintomas{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+
+    .fluxo{
+
+        flex-direction:column;
+
+    }
+
+
+
+    .fluxo label{
+
+        width:100%;
+
+    }
+
+
+
+    button{
+
+        font-size:15px;
+
+        padding:13px;
+
+    }
+
+
+}
+
+
+
+
+
+@media (max-width: 480px){
+
+
+    .container{
+
+        padding:15px;
+
+    }
+
+
+
+    h1{
+
+        font-size:21px;
+
+    }
+
+
+
+    .ajuda{
+
+        font-size:13px;
+
+    }
+
+
+
+    .sintoma-card{
+
+        padding:12px;
+
+        font-size:14px;
+
+    }
+
+
+
+    input[type="date"],
+    textarea{
+
+        font-size:14px;
+
+    }
+
+}
+/* ================= MODAL DO DIA ================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.45);
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.modal-conteudo{
+
+    width:420px;
+    max-width:95%;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:25px;
+
+    position:relative;
+
+    animation:aparecer .3s ease;
+}
+
+@keyframes aparecer{
+
+    from{
+        transform:scale(.8);
+        opacity:0;
+    }
+
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+
+}
+
+.fechar{
+
+    position:absolute;
+
+    right:18px;
+
+    top:12px;
+
+    font-size:28px;
+
+    cursor:pointer;
+
+    color:#8a63d2;
+
+}
+
+#conteudoDia{
+
+    margin-top:15px;
+
+    line-height:2;
+
+}
+
+.card-info{
+
+    background:#faf7ff;
+
+    border-radius:15px;
+
+    padding:12px;
+
+    margin-bottom:10px;
+
+}
+
+.card-info strong{
+
+    color:#8a63d2;
+
+}
+
+.dia{
+
+    position:relative;
+}
+
+.dia.com-registro::after{
+
+    content:"";
+
+    width:8px;
+
+    height:8px;
+
+    border-radius:50%;
+
+    background:#8a63d2;
+
+    position:absolute;
+
+    top:5px;
+
+    right:5px;
+
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Espelho Vital - Sintomas</title>
+
+    <link rel="stylesheet" href="../css/sintomas.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🌸 Registro de Sintomas</h1>
+
+    <p class="ajuda">
+        Registre seus sintomas e a intensidade do fluxo menstrual para acompanhar melhor seu ciclo.
+    </p>
+
+    <form id="sintomasForm">
+
+        <label>📅 Data do registro</label>
+
+        <input
+            type="date"
+            id="dataSintoma"
+            required
+        >
+
+        <label>💭 Sintomas apresentados</label>
+
+        <div class="sintomas">
+
+            <label class="sintoma-card">
+                <input type="checkbox" value="Cólicas">
+                🌸 Cólicas
+            </label>
+
+            <label class="sintoma-card">
+                <input type="checkbox" value="Dor de cabeça">
+                🤕 Dor de cabeça
+            </label>
+
+            <label class="sintoma-card">
+                <input type="checkbox" value="Dor nas costas">
+                💜 Dor nas costas
+            </label>
+
+            <label class="sintoma-card">
+                <input type="checkbox" value="Alteração de humor">
+                😊 Alteração de humor
+            </label>
+
+            <label class="sintoma-card">
+                <input type="checkbox" value="Cansaço">
+                😴 Cansaço
+            </label>
+
+            <label class="sintoma-card">
+                <input type="checkbox" value="Inchaço">
+                🌷 Inchaço
+            </label>
+
+            <label class="sintoma-card">
+                <input type="checkbox" value="Sensibilidade nos seios">
+                🌺 Sensibilidade nos seios
+            </label>
+
+            <label class="sintoma-card">
+                <input type="checkbox" value="Acne">
+                🌼 Acne
+            </label>
+
+            <label class="sintoma-card">
+                <input type="checkbox" value="Náusea">
+                🤢 Náusea
+            </label>
+
+            <label class="sintoma-card">
+                <input type="checkbox" value="Insônia">
+                🌙 Insônia
+            </label>
+
+        </div>
+
+        <label>📝 Observações pessoais</label>
+
+        <textarea
+            id="observacao"
+            placeholder="Digite alguma observação..."
+        ></textarea>
+
+        <label>🩸 Intensidade do fluxo menstrual</label>
+
+        <div class="fluxo">
+
+            <label class="leve">
+                <input
+                    type="radio"
+                    name="fluxo"
+                    value="Leve"
+                    required
+                >
+                🌸 Leve
+            </label>
+
+            <label class="medio">
+                <input
+                    type="radio"
+                    name="fluxo"
+                    value="Médio"
+                >
+                🌺 Médio
+            </label>
+
+            <label class="intenso">
+                <input
+                    type="radio"
+                    name="fluxo"
+                    value="Intenso"
+                >
+                🌹 Intenso
+            </label>
+
+        </div>
+
+        <button type="submit">
+            💾 Salvar Registro
+        </button>
+
+    </form>
+
+    <div id="mensagem"></div>
+
+</div>
+
+<script src="../js/sintomas.js"></script>
+<script src="../js/sidebar.js"></script>
+
+</body>
+
+</html>
