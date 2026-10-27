@@ -15,11 +15,8 @@
         { href: raiz + "pages/humor.html", icon: "😊", label: "Registro de Humor", match: ["humor.html"] },
         { href: raiz + "pages/sono.html", icon: "😴", label: "Registro de Sono", match: ["sono.html", "historico.html"] },
         { href: raiz + "pages/consultas.html", icon: "🩺", label: "Consultas e Exames", match: ["consultas.html"] },
-        { href: raiz + "pages/analise.html", icon: "📊", label: "Análise de Sono", match: ["analise.html"] },
-        { href: raiz + "pages/analise-ia.html", icon: "🤖", label: "Análise Inteligente", match: ["analise-ia.html"] },
-        { href: raiz + "pages/graficos.html", icon: "📈", label: "Gráficos", match: ["graficos.html"] },
-        { href: raiz + "pages/recomendacoes.html", icon: "💡", label: "Recomendações de Sono", match: ["recomendacoes.html"] },
-        { href: raiz + "pages/recomendacoes-personalizadas.html", icon: "✨", label: "Recomendações Personalizadas", match: ["recomendacoes-personalizadas.html"] },
+        { href: raiz + "pages/analise.html", icon: "📊", label: "Análise Inteligente", match: ["analise.html"] },
+        { href: raiz + "pages/recomendacoes.html", icon: "💡", label: "Recomendações", match: ["recomendacoes.html"] },
         { href: raiz + "pages/assistant.html", icon: "🧠", label: "Assistente Vital", match: ["assistant.html"] }
     ];
 

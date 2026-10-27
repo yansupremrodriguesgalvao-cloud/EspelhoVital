@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recomendações de Sono</title>
+    <title>Recomendações</title>
 
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/sidebar.css">
@@ -12,15 +12,18 @@
 
 <div class="container">
 
-    <a href="../perfil-pronto.html" class="voltar">
-        ⬅ Voltar ao Dashboard
-    </a>
+    <a href="../perfil-pronto.html" class="voltar">⬅ Voltar ao Dashboard</a>
 
     <div class="form-card">
 
-        <h2>💡 Recomendações de Sono</h2>
+        <h2>💡 Recomendações</h2>
+        <p style="opacity:.7; font-size:.88rem; margin-bottom:16px;">
+            Cruzamos seus registros de ciclo, sono e humor para sugerir cuidados
+            feitos sob medida para você. Não substitui avaliação médica.
+        </p>
 
-        <div id="recomendacao">
+        <div id="recSono"></div>
+        <div id="recomendacoesConteudo">
             <p>⏳ Carregando recomendações...</p>
         </div>
 
@@ -29,86 +32,62 @@
 </div>
 
 <script>
+const API = "http://localhost:8081";
+
+function escapar(texto) {
+    const d = document.createElement("div");
+    d.textContent = texto ?? "";
+    return d.innerHTML;
+}
+
+function card(html) {
+    return `<div class="card" style="margin-bottom:16px; white-space:pre-line;">${html}</div>`;
+}
+
+// Recomendação baseada no último registro de sono
+function recomendacaoUltimoSono(registros) {
+    if (!registros.length) return "";
+
+    const horas = registros[registros.length - 1].horas;
+
+    if (horas < 6) {
+        return card(`<h3>⚠️ Última noite</h3>
+            <p>Você dormiu pouco (${horas}h). Tente dormir entre 7 e 9 horas por noite.</p>`);
+    }
+    if (horas <= 9) {
+        return card(`<h3>✅ Última noite</h3>
+            <p>Seu tempo de sono (${horas}h) está adequado. Continue mantendo sua rotina.</p>`);
+    }
+    return card(`<h3>ℹ️ Última noite</h3>
+        <p>Você dormiu acima da média (${horas}h). Observe se há cansaço excessivo durante o dia.</p>`);
+}
 
 async function carregarRecomendacoes() {
 
-    try {
+    const area = document.getElementById("recomendacoesConteudo");
 
-        const resposta =
-            await fetch("http://localhost:8081/sono");
+    const [personalizadas, sono] = await Promise.allSettled([
+        fetch(`${API}/recomendacoes/personalizadas`).then(r => r.json()),
+        fetch(`${API}/sono`).then(r => r.json())
+    ]);
 
-        const registros =
-            await resposta.json();
-
-        const area =
-            document.getElementById("recomendacao");
-
-        if (registros.length === 0) {
-
-            area.innerHTML = `
-                <div class="card">
-                    <p>Nenhum registro encontrado.</p>
-                </div>
-            `;
-
-            return;
-        }
-
-        const ultimo =
-            registros[registros.length - 1];
-
-        let mensagem = "";
-
-        if (ultimo.horas < 6) {
-
-            mensagem = `
-                <div class="card">
-                    <h3>⚠️ Atenção</h3>
-                    <p>Você está dormindo pouco.</p>
-                    <p>Tente dormir entre 7 e 9 horas por noite.</p>
-                </div>
-            `;
-
-        } else if (ultimo.horas <= 9) {
-
-            mensagem = `
-                <div class="card">
-                    <h3>✅ Excelente</h3>
-                    <p>Seu tempo de sono está adequado.</p>
-                    <p>Continue mantendo sua rotina atual.</p>
-                </div>
-            `;
-
-        } else {
-
-            mensagem = `
-                <div class="card">
-                    <h3>ℹ️ Observação</h3>
-                    <p>Você está dormindo acima da média.</p>
-                    <p>Observe se existe cansaço excessivo durante o dia.</p>
-                </div>
-            `;
-
-        }
-
-        area.innerHTML = mensagem;
-
-    } catch (erro) {
-
-        console.error(erro);
-
-        document.getElementById("recomendacao").innerHTML = `
-            <div class="card">
-                <p>❌ Erro ao carregar recomendações.</p>
-            </div>
-        `;
-
+    if (sono.status === "fulfilled" && Array.isArray(sono.value)) {
+        document.getElementById("recSono").innerHTML = recomendacaoUltimoSono(sono.value);
     }
 
+    if (personalizadas.status !== "fulfilled") {
+        area.innerHTML = card("<p>❌ Erro ao conectar com o servidor. Ele está rodando?</p>");
+        return;
+    }
+
+    const lista = personalizadas.value.recomendacoes || [];
+
+    area.innerHTML = lista.length
+        ? lista.map(t => card(`<p>${escapar(t)}</p>`)).join("")
+        : card("<p>Sem recomendações no momento.</p>");
 }
 
 carregarRecomendacoes();
-
 </script>
 <script src="../js/sidebar.js"></script>
 
