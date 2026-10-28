@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultas e Exames</title>
+
+    <title>Consultas e Exames | Espelho Vital</title>
 
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/sidebar.css">
@@ -17,61 +19,134 @@
         ⬅ Voltar ao Dashboard
     </a>
 
+    <!-- CONSULTAS E EXAMES -->
     <div class="form-card">
-
         <h2>🩺 Consultas e Exames</h2>
-        <p class="ajuda">Cadastre consultas médicas e exames para receber lembretes por aqui.</p>
+
+        <p class="ajuda">
+            Organize suas consultas médicas e seus exames e receba lembretes
+            sobre os compromissos agendados.
+        </p>
+
+        <!-- NOTIFICAÇÕES -->
+        <section class="notificacoes-consultas">
+            <h3>🔔 Notificações e lembretes</h3>
+
+            <p>
+                Ative as notificações do navegador para receber avisos
+                quando houver compromissos próximos.
+            </p>
+
+            <button type="button" id="ativarNotificacoes">
+                🔔 Ativar notificações
+            </button>
+
+            <p id="statusNotificacoes" role="status"></p>
+
+            <div id="painelNotificacoes" aria-live="polite">
+                <p class="vazio">Carregando lembretes...</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- CADASTRO -->
+    <div class="form-card" style="margin-top:24px;">
+
+        <h2>➕ Cadastrar compromisso</h2>
 
         <form id="consultaForm">
 
-            <label>Tipo</label>
+            <label for="tipo">Tipo de compromisso</label>
             <select id="tipo" required>
-                <option value="CONSULTA">🩺 Consulta</option>
+                <option value="CONSULTA">🩺 Consulta médica</option>
                 <option value="EXAME">🧪 Exame</option>
             </select>
 
-            <label>Título</label>
-            <input type="text" id="titulo" placeholder="Ex: Consulta com ginecologista" required>
+            <label for="titulo">Título</label>
+            <input
+                type="text"
+                id="titulo"
+                placeholder="Ex.: Consulta com ginecologista"
+                required
+            >
 
-            <label>Data</label>
+            <label for="dataAgendada">Data</label>
             <input type="date" id="dataAgendada" required>
 
-            <label>Hora (opcional)</label>
+            <label for="horaAgendada">Horário (opcional)</label>
             <input type="time" id="horaAgendada">
 
-            <label>Local / Clínica (opcional)</label>
-            <input type="text" id="local" placeholder="Ex: Clínica Vital">
+            <label for="local">Local ou clínica (opcional)</label>
+            <input
+                type="text"
+                id="local"
+                placeholder="Ex.: Clínica Vital"
+            >
 
-            <label>Profissional (opcional)</label>
-            <input type="text" id="profissional" placeholder="Ex: Dra. Ana Souza">
+            <label for="profissional">Profissional (opcional)</label>
+            <input
+                type="text"
+                id="profissional"
+                placeholder="Ex.: Dra. Ana Souza"
+            >
 
-            <label>Avisar com quantos dias de antecedência?</label>
+            <label for="lembreteDiasAntes">
+                Quando deseja receber o lembrete?
+            </label>
+
             <select id="lembreteDiasAntes">
-                <option value="0">No dia</option>
+                <option value="0">No dia do compromisso</option>
                 <option value="1" selected>1 dia antes</option>
                 <option value="2">2 dias antes</option>
                 <option value="3">3 dias antes</option>
                 <option value="7">1 semana antes</option>
             </select>
 
-            <label>Observações (opcional)</label>
-            <input type="text" id="observacao" placeholder="Ex: Levar exames anteriores">
+            <label for="observacao">Observações (opcional)</label>
+            <input
+                type="text"
+                id="observacao"
+                placeholder="Ex.: Levar exames anteriores"
+            >
 
-            <button type="submit">💾 Salvar compromisso</button>
+            <button type="submit">
+                💾 Salvar compromisso
+            </button>
+
         </form>
 
-        <p id="feedback" style="margin-top:10px; font-size:14px;"></p>
+        <p id="feedback" role="status" style="margin-top:10px;"></p>
 
     </div>
 
+    <!-- PRÓXIMOS COMPROMISSOS -->
     <div class="form-card" style="margin-top:24px;">
-        <h2>📋 Próximos compromissos</h2>
-        <div id="listaProximas"><p class="vazio">Carregando...</p></div>
+
+        <h2>📋 Próximas consultas e exames</h2>
+
+        <p class="ajuda">
+            Aqui aparecem seus compromissos que ainda estão agendados.
+        </p>
+
+        <div id="listaProximas">
+            <p class="vazio">Carregando compromissos...</p>
+        </div>
+
     </div>
 
+    <!-- HISTÓRICO -->
     <div class="form-card" style="margin-top:24px;">
-        <h2>📖 Histórico</h2>
-        <div id="listaHistorico"><p class="vazio">Carregando...</p></div>
+
+        <h2>📖 Histórico de consultas e exames</h2>
+
+        <p class="ajuda">
+            Consulte os compromissos realizados ou cancelados.
+        </p>
+
+        <div id="listaHistorico">
+            <p class="vazio">Carregando histórico...</p>
+        </div>
+
     </div>
 
 </div>
