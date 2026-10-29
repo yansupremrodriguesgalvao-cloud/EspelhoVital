@@ -1,160 +1,116 @@
-const API_CONSULTAS = "http://localhost:8081/consultas";
-
 const form = document.getElementById("consultaForm");
 const feedback = document.getElementById("feedback");
-const listaProximasEl = document.getElementById("listaProximas");
-const listaHistoricoEl = document.getElementById("listaHistorico");
-
-function usuarioIdAtual() {
-    const id = localStorage.getItem("usuarioId");
-    return id ? Number(id) : null;
+function node(tag, text, className) {
+  const n = document.createElement(tag);
+  if (text != null) n.textContent = text;
+  if (className) n.className = className;
+  return n;
 }
-
-function formatarDataHora(c) {
-    if (!c.dataAgendada) return "";
-    const [ano, mes, dia] = c.dataAgendada.split("-");
-    let texto = `${dia}/${mes}/${ano}`;
-    if (c.horaAgendada) texto += ` às ${c.horaAgendada.substring(0, 5)}`;
-    return texto;
+function card(c) {
+  const root = node("div", null, "consulta-card");
+  const info = node("div", null, "consulta-info");
+  info.append(
+    node("h3", c.titulo),
+    node(
+      "p",
+      c.dataAgendada.split("-").reverse().join("/") +
+        (c.horaAgendada ? " às " + c.horaAgendada.slice(0, 5) : ""),
+    ),
+  );
+  for (const field of ["local", "profissional", "observacao"])
+    if (c[field]) info.append(node("p", c[field]));
+  root.append(
+    info,
+    node("span", c.tipo === "EXAME" ? "Exame" : "Consulta", "consulta-tag"),
+  );
+  const actions = node("div", null, "consulta-acoes");
+  for (const [label, status] of [
+    ["Realizada", "REALIZADA"],
+    ["Cancelar", "CANCELADA"],
+    ["Excluir", null],
+  ]) {
+    if (status && c.status !== "AGENDADA") continue;
+    const button = node("button", label);
+    button.type = "button";
+    button.addEventListener("click", async () => {
+      if (!status && !confirm("Excluir este compromisso?")) return;
+      button.disabled = true;
+      try {
+        await EV.fetch("/consultas/" + c.id + (status ? "/status" : ""), {
+          method: status ? "PATCH" : "DELETE",
+          headers: { "Content-Type": "application/json" },
+          ...(status ? { body: JSON.stringify({ status }) } : {}),
+        });
+        await carregarListas();
+      } catch (e) {
+        feedback.textContent = e.message;
+      } finally {
+        button.disabled = false;
+      }
+    });
+    actions.append(button);
+  }
+  root.append(actions);
+  return root;
 }
-
-function montarCard(c) {
-    const tag = c.tipo === "EXAME" ? "🧪 Exame" : "🩺 Consulta";
-    const statusClasse = c.status === "REALIZADA" ? "status-realizada"
-        : c.status === "CANCELADA" ? "status-cancelada" : "";
-
-    const acoes = c.status === "AGENDADA" ? `
-        <div class="consulta-acoes">
-            <button class="btn-realizada" onclick="marcarStatus(${c.id}, 'REALIZADA')">✔ Realizada</button>
-            <button class="btn-cancelar" onclick="marcarStatus(${c.id}, 'CANCELADA')">✖ Cancelar</button>
-            <button class="btn-excluir" onclick="excluirConsulta(${c.id})">🗑</button>
-        </div>
-    ` : `
-        <div class="consulta-acoes">
-            <button class="btn-excluir" onclick="excluirConsulta(${c.id})">🗑 Excluir</button>
-        </div>
-    `;
-
-    return `
-        <div class="consulta-card ${statusClasse}">
-            <div class="consulta-info">
-                <h3>${c.titulo}</h3>
-                <p>📅 ${formatarDataHora(c)}</p>
-                ${c.local ? `<p>📍 ${c.local}</p>` : ""}
-                ${c.profissional ? `<p>👩‍⚕️ ${c.profissional}</p>` : ""}
-                ${c.observacao ? `<p>📝 ${c.observacao}</p>` : ""}
-            </div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:10px;">
-                <span class="consulta-tag">${tag}</span>
-                ${acoes}
-            </div>
-        </div>
-    `;
-}
-
 async function carregarListas() {
-    try {
-        const usuarioId = usuarioIdAtual();
-        const url = usuarioId ? `${API_CONSULTAS}?usuarioId=${usuarioId}` : API_CONSULTAS;
-
-        const resposta = await fetch(url);
-        const todas = await resposta.json();
-
-        const proximas = todas.filter(c => c.status === "AGENDADA")
-            .sort((a, b) => a.dataAgendada.localeCompare(b.dataAgendada));
-
-        const historico = todas.filter(c => c.status !== "AGENDADA")
-            .sort((a, b) => b.dataAgendada.localeCompare(a.dataAgendada));
-
-        listaProximasEl.innerHTML = proximas.length
-            ? proximas.map(montarCard).join("")
-            : `<p class="vazio">Nenhum compromisso agendado.</p>`;
-
-        listaHistoricoEl.innerHTML = historico.length
-            ? historico.map(montarCard).join("")
-            : `<p class="vazio">Nenhum histórico ainda.</p>`;
-
-    } catch (erro) {
-        console.error(erro);
-        listaProximasEl.innerHTML = `<p class="vazio">❌ Erro ao carregar. O servidor está rodando?</p>`;
-        listaHistoricoEl.innerHTML = "";
+  try {
+    await EV.ready;
+    const all = await EV.json("/consultas");
+    for (const [id, scheduled] of [
+      ["listaProximas", true],
+      ["listaHistorico", false],
+    ]) {
+      const list = document.getElementById(id);
+      const items = all.filter((c) => (c.status === "AGENDADA") === scheduled);
+      list.replaceChildren(...items.map(card));
+      if (!items.length)
+        list.append(
+          node(
+            "p",
+            scheduled
+              ? "Nenhum compromisso agendado."
+              : "Nenhum histórico ainda.",
+            "vazio",
+          ),
+        );
     }
+  } catch (e) {
+    feedback.textContent = e.message;
+  }
 }
-
-async function marcarStatus(id, status) {
-    try {
-        // A API espera o objeto completo no PUT, então buscamos os dados atuais primeiro
-        const resposta = await fetch(API_CONSULTAS);
-        const todas = await resposta.json();
-        const consulta = todas.find(c => c.id === id);
-
-        if (!consulta) return;
-
-        consulta.status = status;
-
-        await fetch(`${API_CONSULTAS}/${id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(consulta)
-        });
-
-        carregarListas();
-
-    } catch (erro) {
-        console.error(erro);
-        alert("Não foi possível atualizar o compromisso.");
-    }
-}
-
-async function excluirConsulta(id) {
-    if (!confirm("Deseja realmente excluir este compromisso?")) return;
-
-    try {
-        await fetch(`${API_CONSULTAS}/${id}`, { method: "DELETE" });
-        carregarListas();
-    } catch (erro) {
-        console.error(erro);
-        alert("Não foi possível excluir o compromisso.");
-    }
-}
-
 form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const dados = {
-        tipo: document.getElementById("tipo").value,
-        titulo: document.getElementById("titulo").value,
-        dataAgendada: document.getElementById("dataAgendada").value,
-        horaAgendada: document.getElementById("horaAgendada").value || null,
-        local: document.getElementById("local").value || null,
-        profissional: document.getElementById("profissional").value || null,
-        observacao: document.getElementById("observacao").value || null,
-        lembreteDiasAntes: parseInt(document.getElementById("lembreteDiasAntes").value),
-        status: "AGENDADA",
-        usuarioId: usuarioIdAtual()
-    };
-
-    try {
-        const resposta = await fetch(API_CONSULTAS, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(dados)
-        });
-
-        if (!resposta.ok) throw new Error("Falha ao salvar");
-
-        feedback.style.color = "lightgreen";
-        feedback.innerText = "✅ Compromisso salvo com sucesso!";
-        form.reset();
-        document.getElementById("lembreteDiasAntes").value = "1";
-
-        carregarListas();
-
-    } catch (erro) {
-        console.error(erro);
-        feedback.style.color = "salmon";
-        feedback.innerText = "❌ Erro ao salvar. Verifique se o servidor está rodando.";
-    }
+  e.preventDefault();
+  const button = e.submitter;
+  button.disabled = true;
+  const data = {};
+  for (const key of [
+    "tipo",
+    "titulo",
+    "dataAgendada",
+    "horaAgendada",
+    "local",
+    "profissional",
+    "observacao",
+  ])
+    data[key] = document.getElementById(key).value || null;
+  data.lembreteDiasAntes = Number(
+    document.getElementById("lembreteDiasAntes").value,
+  );
+  data.status = "AGENDADA";
+  try {
+    await EV.json("/consultas", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    feedback.textContent = "Compromisso salvo.";
+    form.reset();
+    await carregarListas();
+  } catch (e) {
+    feedback.textContent = e.message;
+  } finally {
+    button.disabled = false;
+  }
 });
-
 document.addEventListener("DOMContentLoaded", carregarListas);

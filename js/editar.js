@@ -1,82 +1,86 @@
-const API_USUARIOS = "http://localhost:8081/usuarios";
+const API_USUARIOS = EV.base + "/usuarios";
 
 function getUsuarioId() {
-    const id = localStorage.getItem("usuarioId");
+  const id = localStorage.getItem("usuarioId");
 
-    if (!id) {
-        alert("Você precisa fazer login primeiro.");
-        window.location.href = "pages/login.html";
-        return null;
-    }
+  if (!id) {
+    alert("Você precisa fazer login primeiro.");
+    window.location.href = "pages/login.html";
+    return null;
+  }
 
-    return id;
+  return id;
 }
 
 async function preencherFormulario() {
+  await EV.ready;
 
-    const id = getUsuarioId();
-    if (!id) return;
+  const id = getUsuarioId();
+  if (!id) return;
 
-    try {
-        const resposta = await fetch(`${API_USUARIOS}/${id}`);
-        if (!resposta.ok) return;
+  try {
+    const resposta = await EV.fetch(`${API_USUARIOS}/${id}`);
+    if (!resposta.ok) return;
 
-        const usuario = await resposta.json();
+    const usuario = await resposta.json();
 
-        document.getElementById("nome").value = usuario.nome || "";
-        document.getElementById("email").value = usuario.email || "";
-        document.getElementById("telefone").value = usuario.telefone || "";
-        document.getElementById("dataNascimento").value = usuario.dataNascimento || "";
-        document.getElementById("cidade").value = usuario.cidade || "";
-        document.getElementById("peso").value = usuario.peso ?? "";
-        document.getElementById("altura").value = usuario.altura ?? "";
+    document.getElementById("nome").value = usuario.nome || "";
+    document.getElementById("email").value = usuario.email || "";
+    document.getElementById("telefone").value = usuario.telefone || "";
+    document.getElementById("dataNascimento").value =
+      usuario.dataNascimento || "";
+    document.getElementById("cidade").value = usuario.cidade || "";
+    document.getElementById("peso").value = usuario.peso ?? "";
+    document.getElementById("altura").value = usuario.altura ?? "";
 
-        if (usuario.objetivo) {
-            document.getElementById("objetivo").value = usuario.objetivo;
-        }
-
-    } catch (erro) {
-        console.error("Erro ao carregar dados atuais:", erro);
+    if (usuario.objetivo) {
+      document.getElementById("objetivo").value = usuario.objetivo;
     }
+  } catch (erro) {
+    console.error("Erro ao carregar dados atuais:", erro);
+  }
 }
 
 document.getElementById("perfilForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const id = getUsuarioId();
-    if (!id) return;
+  const id = getUsuarioId();
+  if (!id) return;
 
-    const usuario = {
-        nome: document.getElementById("nome").value,
-        email: document.getElementById("email").value,
-        telefone: document.getElementById("telefone").value,
-        dataNascimento: document.getElementById("dataNascimento").value,
-        cidade: document.getElementById("cidade").value,
-        peso: document.getElementById("peso").value ? Number(document.getElementById("peso").value) : null,
-        altura: document.getElementById("altura").value ? Number(document.getElementById("altura").value) : null,
-        objetivo: document.getElementById("objetivo").value
-    };
+  const usuario = {
+    nome: document.getElementById("nome").value,
+    email: document.getElementById("email").value,
+    telefone: document.getElementById("telefone").value,
+    dataNascimento: document.getElementById("dataNascimento").value || null,
+    cidade: document.getElementById("cidade").value,
+    peso: document.getElementById("peso").value
+      ? Number(document.getElementById("peso").value)
+      : null,
+    altura: document.getElementById("altura").value
+      ? Number(document.getElementById("altura").value)
+      : null,
+    objetivo: document.getElementById("objetivo").value,
+  };
 
-    try {
-        const resposta = await fetch(`${API_USUARIOS}/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(usuario)
-        });
+  try {
+    const resposta = await EV.fetch(`${API_USUARIOS}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(usuario),
+    });
 
-        if (!resposta.ok) {
-            throw new Error("Erro ao atualizar");
-        }
-
-        alert("Perfil atualizado com sucesso!");
-        window.location.href = "perfil-detalhes.html";
-
-    } catch (error) {
-        console.error(error);
-        alert("Erro ao conectar com servidor.");
+    if (!resposta.ok) {
+      throw new Error("Erro ao atualizar");
     }
+
+    alert("Perfil atualizado com sucesso!");
+    window.location.href = "perfil-detalhes.html";
+  } catch (error) {
+    console.error(error);
+    alert(error.message);
+  }
 });
 
 preencherFormulario();

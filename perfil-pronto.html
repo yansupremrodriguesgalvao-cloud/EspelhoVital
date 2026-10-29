@@ -1,88 +1,203 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Início</title>
-
-<link rel="stylesheet" href="css/perfil-pronto.css">
-<link rel="stylesheet" href="css/sidebar.css">
-<link rel="stylesheet" href="css/dashboard.css">
-
-</head>
-<body>
-
-<div class="ev-dashboard">
-
-    <div class="ev-welcome">
-        <p class="ev-eyebrow">Que bom te ver por aqui</p>
-        <h1 id="saudacao">Olá! 👋</h1>
-        <p class="ev-welcome-sub">
-            Este é o seu painel de acompanhamento da saúde. Aqui você vê, num
-            só lugar, seu ciclo, seu sono, seu humor e seus próximos compromissos.
-        </p>
-    </div>
-
-    <div id="ev-alertas" class="ev-alertas" style="display:none;"></div>
-
-    <div class="ev-cards-grid">
-
-        <a href="pages/ciclo.html" class="ev-card">
-            <div class="ev-card-icon">🌸</div>
-            <div class="ev-card-label">Fase do ciclo</div>
-            <div class="ev-card-value" id="cardFaseCiclo">--</div>
-            <div class="ev-card-sub" id="cardProximaMenstruacao">Sem dados ainda</div>
-        </a>
-
-        <a href="pages/historico.html" class="ev-card">
-            <div class="ev-card-icon">😴</div>
-            <div class="ev-card-label">Média de sono</div>
-            <div class="ev-card-value" id="cardMediaSono">--</div>
-            <div class="ev-card-sub" id="cardTotalSono">Sem registros ainda</div>
-        </a>
-
-        <a href="pages/humor.html" class="ev-card">
-            <div class="ev-card-icon">😊</div>
-            <div class="ev-card-label">Último humor</div>
-            <div class="ev-card-value" id="cardUltimoHumor">--</div>
-            <div class="ev-card-sub" id="cardDataHumor">Sem registros ainda</div>
-        </a>
-
-        <a href="pages/consultas.html" class="ev-card">
-            <div class="ev-card-icon">🩺</div>
-            <div class="ev-card-label">Próximos compromissos</div>
-            <div class="ev-card-value" id="cardTotalConsultas">--</div>
-            <div class="ev-card-sub">Consultas e exames agendados</div>
-        </a>
-
-    </div>
-
-    <div class="ev-section-box">
-        <h2>🗓️ Próximas consultas e exames</h2>
-        <div id="ev-lista-consultas">
-            <p class="ev-vazio">Carregando...</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#6d28d9" />
+    <title>Meu dia · Espelho Vital</title>
+    <link rel="icon" href="assets/logo.png" />
+    <link rel="stylesheet" href="css/sidebar.css" />
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/icons.js"></script>
+    <link rel="stylesheet" href="css/features.css" />
+  </head>
+  <body class="ev-home">
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+    <main class="ev-dashboard" id="conteudo" aria-busy="true">
+      <header class="dash-header">
+        <div>
+          <p class="eyebrow">SEU ESPAÇO DE CUIDADO</p>
+          <h1 id="saudacao">Seu dia, com mais equilíbrio.</h1>
+          <p class="header-caption">
+            Um olhar tranquilo sobre o que importa para você.
+          </p>
         </div>
-    </div>
+        <div class="header-tools">
+          <a class="feature-link-button" href="pages/diario.html"
+            ><span data-icon="book"></span>Registrar meu dia</a
+          >
+          <div class="header-date">
+            <span data-icon="calendar"></span><time id="dataHoje"></time>
+          </div>
+        </div>
+      </header>
 
-    <div class="ev-quick-links">
-        <a href="pages/analise.html" class="ev-quick-link">📊 Análise Inteligente</a>
-        <a href="pages/recomendacoes.html" class="ev-quick-link">💡 Recomendações</a>
-        <a href="pages/consultas.html" class="ev-quick-link">🩺 Gerenciar Consultas</a>
-        <a href="pages/assistant.html" class="ev-quick-link">🧠 Assistente Vital</a>
-    </div>
+      <div id="dashboardErro" class="load-error" role="alert" hidden>
+        <div>
+          <strong>Não conseguimos carregar seu resumo.</strong>
+          <p>Seus registros continuam salvos. Tente novamente em instantes.</p>
+        </div>
+        <button id="tentarNovamente" type="button">Tentar novamente</button>
+      </div>
 
-</div>
+      <section class="overview-grid" aria-label="Seu resumo de hoje">
+        <article class="focus-card">
+          <div class="focus-art" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <p class="focus-kicker">
+            <span class="status-dot"></span> UM PASSO DE CADA VEZ
+          </p>
+          <h2 id="focoTitulo">Seu bem-estar começa<br />com um momento seu.</h2>
+          <p id="focoTexto">
+            Carregando seu resumo para encontrar o próximo cuidado do dia.
+          </p>
+          <a id="focoAcao" class="focus-button" href="pages/humor.html"
+            ><span id="focoAcaoTexto">Como você está hoje?</span
+            ><span data-icon="arrow"></span
+          ></a>
+          <p class="focus-footnote" id="focoRodape">
+            Um registro simples já ajuda a conhecer sua rotina.
+          </p>
+        </article>
+        <article class="daily-card panel">
+          <div class="section-top">
+            <div>
+              <p class="eyebrow">UM POUCO DE VOCÊ</p>
+              <h2>Seu check-in de hoje</h2>
+            </div>
+            <span class="icon-badge" data-icon="heart"></span>
+          </div>
+          <p class="muted daily-intro">
+            Pequenos registros. Mais consciência da sua rotina.
+          </p>
+          <a class="checkin-row" href="pages/humor.html"
+            ><span class="checkin-icon" data-icon="smile"></span
+            ><span
+              ><strong>Como você se sente?</strong
+              ><small id="checkHumorTexto">Registrar meu humor</small></span
+            ><span id="checkHumor" class="check-state" data-icon="plus"></span
+          ></a>
+          <a class="checkin-row" href="pages/sono.html"
+            ><span class="checkin-icon" data-icon="moon"></span
+            ><span
+              ><strong>Como foi sua noite?</strong
+              ><small id="checkSonoTexto">Registrar meu sono</small></span
+            ><span id="checkSono" class="check-state" data-icon="plus"></span
+          ></a>
+          <div class="daily-footer">
+            <span class="tiny-dot"></span
+            ><span id="checkResumo">Um dia de cada vez, no seu ritmo.</span>
+          </div>
+        </article>
+      </section>
 
-<script>
-    const nomeUsuario = localStorage.getItem("usuarioNome");
-    if (nomeUsuario) {
-        document.getElementById("saudacao").innerText = "Olá, " + nomeUsuario + "! 👋";
-    }
-</script>
+      <section aria-labelledby="resumoTitulo" class="summary-section">
+        <div class="section-heading">
+          <h2 id="resumoTitulo">Seu bem-estar em perspectiva</h2>
+          <a class="text-link" href="pages/analise.html"
+            >Explorar meus registros <span data-icon="arrow"></span
+          ></a>
+        </div>
+        <div class="metrics-grid">
+          <a class="metric-card" href="pages/ciclo.html"
+            ><div class="metric-top">
+              <span class="icon-badge rose" data-icon="flower"></span
+              ><span class="metric-category">CICLO MENSTRUAL</span
+              ><span class="metric-arrow" data-icon="arrowUp"></span>
+            </div>
+            <h3 id="cardFaseCiclo">Carregando…</h3>
+            <p id="cardProximaMenstruacao">Seu calendário, no seu ritmo.</p>
+            <span class="metric-bottom"
+              >Acompanhar meu ciclo <span data-icon="arrow"></span></span
+          ></a>
+          <a class="metric-card" href="pages/sono.html"
+            ><div class="metric-top">
+              <span class="icon-badge" data-icon="moon"></span
+              ><span class="metric-category">MEU DESCANSO</span
+              ><span class="metric-arrow" data-icon="arrowUp"></span>
+            </div>
+            <h3 id="cardMediaSono">—</h3>
+            <p id="cardTotalSono">Média dos seus registros de sono.</p>
+            <span class="metric-bottom"
+              >Ver meu sono <span data-icon="arrow"></span></span
+          ></a>
+          <a class="metric-card" href="pages/humor.html"
+            ><div class="metric-top">
+              <span class="icon-badge peach" data-icon="smile"></span
+              ><span class="metric-category">COMO ME SINTO</span
+              ><span class="metric-arrow" data-icon="arrowUp"></span>
+            </div>
+            <h3 id="cardUltimoHumor">—</h3>
+            <p id="cardDataHumor">Seu último registro de humor.</p>
+            <span class="metric-bottom"
+              >Meu histórico de humor <span data-icon="arrow"></span></span
+          ></a>
+        </div>
+      </section>
 
-<script src="js/dashboard.js"></script>
-<script src="js/sidebar.js"></script>
+      <section class="detail-grid" aria-label="Sua rotina e agenda">
+        <article class="panel sleep-panel">
+          <div class="section-top">
+            <div>
+              <p class="eyebrow">RITMO DA SEMANA</p>
+              <h2>Uma pausa para o descanso</h2>
+            </div>
+            <span class="icon-badge" data-icon="moon"></span>
+          </div>
+          <p class="muted">Seu sono registrado nos últimos sete dias.</p>
+          <div
+            id="graficoSemana"
+            class="week-chart"
+            aria-label="Registros de sono dos últimos sete dias"
+          ></div>
+          <div class="chart-footer">
+            <span id="resumoSemana">Carregando seus registros…</span
+            ><a class="text-link" href="pages/historico.html"
+              >Ver histórico <span data-icon="arrow"></span
+            ></a>
+          </div>
+        </article>
+        <article class="panel agenda-panel">
+          <div class="section-top">
+            <div>
+              <p class="eyebrow">SEUS PRÓXIMOS PASSOS</p>
+              <h2>
+                Na sua agenda
+                <span class="count-badge" id="cardTotalConsultas">—</span>
+              </h2>
+            </div>
+            <a
+              class="small-icon-link"
+              href="pages/consultas.html"
+              aria-label="Gerenciar consultas e exames"
+              data-icon="plus"
+            ></a>
+          </div>
+          <div id="ev-lista-consultas" class="appointment-list">
+            <p class="muted">Carregando sua agenda…</p>
+          </div>
+          <a class="agenda-link text-link" href="pages/consultas.html"
+            >Ver consultas e exames <span data-icon="arrow"></span
+          ></a>
+        </article>
+      </section>
 
-</body>
+      <footer class="dashboard-footer">
+        <span data-icon="flower"></span>
+        <p>
+          Mais cuidado, menos cobrança. <strong>O seu ritmo importa.</strong>
+        </p>
+        <a href="pages/assistant.html"
+          >Conversar com a Assistente Vital <span data-icon="arrow"></span
+        ></a>
+      </footer>
+    </main>
+    <script src="js/dashboard.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/reminders.js"></script>
+  </body>
 </html>

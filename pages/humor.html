@@ -2,6 +2,9 @@
 <html lang="pt-BR">
 
 <head>
+<script src="../js/config.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/history.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Humor</title>
@@ -162,9 +165,11 @@
 
     </style>
 
-</head>
+<link rel="stylesheet" href="../css/theme.css">
+<script src="../js/icons.js"></script>
+<link rel="stylesheet" href="../css/features.css"></head>
 
-<body>
+<body class="ev-app">
 
 <div class="container">
 
@@ -262,7 +267,7 @@ Histórico
 <script>
 
     // ⚠️ Troque pela URL real da sua API/backend
-    const URL_API = "http://localhost:8081/humor";
+    const URL_API = (EV.base + "/humor");
     // Array que guarda os humores marcados
     let humoresSelecionados = [];
 
@@ -322,7 +327,7 @@ Histórico
 
         try{
 
-            const resposta=await fetch(URL_API,{
+            const resposta=await EV.fetch(URL_API,{
 
                 method:"POST",
 
@@ -381,51 +386,12 @@ Histórico
 
     }
 
-    async function carregarHistoricoDoBanco(){
-
-        try{
-
-            const usuarioId = localStorage.getItem("usuarioId");
-
-            const url = usuarioId
-                ? `${URL_API}?usuarioId=${usuarioId}`
-                : URL_API;
-
-            const resposta=await fetch(url);
-
-            const dados=await resposta.json();
-
-            const lista=document.getElementById("lista-historico");
-
-            lista.innerHTML="";
-
-            dados.reverse().forEach(registro=>{
-
-                const li=document.createElement("li");
-
-                li.innerHTML=`
-                    <strong>${registro.estado}</strong><br>
-                    ${registro.observacao ?? ""}<br>
-                    <small>${registro.dataRegistro ?? ""}</small>
-                `;
-
-                lista.appendChild(li);
-
-            });
-
-        }catch(erro){
-
-            console.error(erro);
-
-        }
-
-    }
-
+    async function carregarHistoricoDoBanco(){await EVHistory.render('lista-historico','humor','humor',true);}
     window.onload=carregarHistoricoDoBanco;
 
     </script>
     <script src="../js/sidebar.js"></script>
 
-    </body>
+    <script src="../js/reminders.js"></script></body>
 
     </html>

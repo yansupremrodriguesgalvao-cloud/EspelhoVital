@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<script src="../js/config.js"></script>
+<script src="../js/api.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reconhecimento Facial</title>
@@ -10,8 +12,10 @@
     <link rel="stylesheet" href="../css/facial.css">
 
     <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
-</head>
-<body>
+<link rel="stylesheet" href="../css/theme.css">
+<script src="../js/icons.js"></script>
+<link rel="stylesheet" href="../css/features.css"></head>
+<body class="ev-app">
 
 <div class="container">
 
@@ -23,7 +27,7 @@
 
         <h2>📷 Reconhecimento Facial</h2>
         <p class="ajuda">
-            Cadastre seu rosto para poder entrar no Espelho Vital sem digitar a senha.
+            Cadastre seu rosto como uma confirmação adicional. O acesso também exige e-mail e senha.
             O reconhecimento acontece direto no seu navegador — nenhuma foto é enviada,
             apenas um código matemático do seu rosto (descritor facial).
         </p>
@@ -32,6 +36,10 @@
             <video id="video" autoplay muted playsinline></video>
             <div id="facialOverlayMsg" class="facial-overlay-msg">⏳ Carregando modelos de reconhecimento...</div>
         </div>
+
+        <label for="senhaConfirmacaoFacial">Confirme sua senha para cadastrar ou substituir o rosto</label>
+<input id="senhaConfirmacaoFacial" type="password" autocomplete="current-password" maxlength="72">
+<button id="removerFace" type="button">Excluir meu cadastro facial</button>
 
         <button id="btnCapturar" disabled>📸 Capturar e salvar meu rosto</button>
 
@@ -42,7 +50,8 @@
 </div>
 
 <script src="../js/facial.js"></script>
+<script>document.getElementById('removerFace').addEventListener('click',async()=>{if(!confirm('Excluir o cadastro facial?'))return;try{await EV.fetch('/usuarios/face',{method:'DELETE'});document.getElementById('facialFeedback').textContent='Cadastro facial excluído.';}catch(e){document.getElementById('facialFeedback').textContent=e.message;}});</script>
 <script src="../js/sidebar.js"></script>
 
-</body>
+<script src="../js/reminders.js"></script></body>
 </html>

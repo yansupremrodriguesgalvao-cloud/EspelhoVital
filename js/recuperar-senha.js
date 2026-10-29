@@ -1,21 +1,22 @@
-const form = document.getElementById("recuperarForm");
-
-form.addEventListener("submit", (e) => {
+document
+  .getElementById("recuperarForm")
+  .addEventListener("submit", async (e) => {
     e.preventDefault();
-
-    const email = document.getElementById("email").value.trim();
-    const mensagem = document.getElementById("mensagem");
-
-    if (!email) {
-        mensagem.style.color = "red";
-        mensagem.innerText = "Digite um e-mail válido";
-        return;
+    const button = e.submitter;
+    const message = document.getElementById("mensagem");
+    button.disabled = true;
+    try {
+      const result = await EV.json("/api/senha/recuperar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: document.getElementById("email").value.trim(),
+        }),
+      });
+      message.textContent = result.mensagem;
+    } catch (error) {
+      message.textContent = error.message;
+    } finally {
+      button.disabled = false;
     }
-
-    // Ainda não existe envio de e-mail real no back-end.
-    // Por enquanto só confirma visualmente pra usuária.
-    mensagem.style.color = "green";
-    mensagem.innerText = "Se esse e-mail estiver cadastrado, você receberá instruções em breve.";
-
-    form.reset();
-});
+  });

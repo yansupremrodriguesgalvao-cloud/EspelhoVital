@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<script src="../js/config.js"></script>
+<script src="../js/api.js"></script>
+<script src="../js/history.js"></script>
 <meta charset="UTF-8">
 <title>Registro de Sono</title>
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="../css/sidebar.css">
-</head>
+<link rel="stylesheet" href="../css/theme.css">
+<script src="../js/icons.js"></script>
+<link rel="stylesheet" href="../css/features.css"></head>
 
-<body>
+<body class="ev-app">
 
 <div class="container">
 
@@ -27,7 +32,7 @@
         >
 
         <select id="qualidade">
-            <option value="">🤖 Deixar a IA decidir</option>
+            <option value="">Avaliar pela duração informada</option>
             <option value="Excelente">🌟 Excelente</option>
             <option value="Boa">😊 Boa</option>
             <option value="Regular">😐 Regular</option>
@@ -57,75 +62,10 @@
 
 <script>
 
-async function carregarHistoricoSono() {
-
-    try {
-
-        const usuarioId = localStorage.getItem("usuarioId");
-        const url = usuarioId
-            ? `http://localhost:8081/sono?usuarioId=${usuarioId}`
-            : "http://localhost:8081/sono";
-
-        const resposta = await fetch(url);
-        const registros = await resposta.json();
-
-        let html = "";
-
-        if (registros.length === 0) {
-
-            html = `
-                <div class="card">
-                    <p>Nenhum registro encontrado.</p>
-                </div>
-            `;
-
-        } else {
-
-            registros.slice().reverse().forEach(item => {
-
-                html += `
-                    <div class="card" style="margin-bottom:20px;">
-
-                        <h3 style="margin-bottom:10px;">
-                            😴 ${item.horas} horas
-                        </h3>
-
-                        <p style="margin-bottom:8px;">
-                            🌟 Qualidade:
-                            ${item.qualidade}
-                        </p>
-
-                        <p>
-                            📅 Data:
-                            ${item.dataRegistro || "Não informada"}
-                        </p>
-
-                    </div>
-                `;
-
-            });
-
-        }
-
-        document.getElementById("historicoSonoConteudo").innerHTML = html;
-
-    } catch (erro) {
-
-        console.error(erro);
-
-        document.getElementById("historicoSonoConteudo").innerHTML = `
-            <div class="card">
-                <p>❌ Erro ao carregar histórico.</p>
-            </div>
-        `;
-
-    }
-
-}
-
+async function carregarHistoricoSono(){await EVHistory.render('historicoSonoConteudo','sono','sono',true);}
 carregarHistoricoSono();
 
 </script>
 
-</body>
+<script src="../js/reminders.js"></script></body>
 </html>

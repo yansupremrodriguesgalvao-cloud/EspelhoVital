@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Resumo para consulta · Espelho Vital</title>
+    <link rel="stylesheet" href="../css/sidebar.css" />
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/features.css" />
+    <script src="../js/config.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/icons.js"></script>
+    <script src="../js/feature-utils.js"></script>
+  </head>
+  <body class="ev-app">
+    <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+    <main id="conteudo" class="feature-shell">
+      <header class="feature-header">
+        <div>
+          <p class="eyebrow">SUA HISTÓRIA, COM VOCÊ</p>
+          <h1>Resumo para consulta</h1>
+          <p>
+            Escolha o período e as informações que deseja levar ao atendimento.
+          </p>
+        </div>
+        <a href="diario.html" class="feature-link-button secondary"
+          >Meu diário <span data-icon="arrow"></span
+        ></a>
+      </header>
+      <section class="feature-panel">
+        <form id="relatorioForm">
+          <div class="feature-grid">
+            <div class="feature-field">
+              <label for="relatorioInicio">Início do período</label
+              ><input id="relatorioInicio" type="date" required />
+            </div>
+            <div class="feature-field">
+              <label for="relatorioFim">Fim do período</label
+              ><input id="relatorioFim" type="date" required />
+            </div>
+          </div>
+          <p class="feature-muted">Selecione um período de até 366 dias.</p>
+          <fieldset class="feature-fieldset">
+            <legend>O que incluir no PDF?</legend>
+            <div class="feature-check-list">
+              <label
+                ><input
+                  name="secao"
+                  type="checkbox"
+                  value="DIARIO"
+                  checked
+                /><span
+                  >Diário integrado<small
+                    >Fluxo, dor, sintomas e observações do dia.</small
+                  ></span
+                ></label
+              ><label
+                ><input
+                  name="secao"
+                  type="checkbox"
+                  value="CICLO"
+                  checked
+                /><span
+                  >Histórico menstrual<small
+                    >Inícios registrados e intervalos observados, sem tratar
+                    previsões como fatos.</small
+                  ></span
+                ></label
+              ><label
+                ><input
+                  name="secao"
+                  type="checkbox"
+                  value="SONO"
+                  checked
+                /><span
+                  >Sono<small
+                    >Duração e qualidade dos registros no período.</small
+                  ></span
+                ></label
+              ><label
+                ><input
+                  name="secao"
+                  type="checkbox"
+                  value="HUMOR"
+                  checked
+                /><span
+                  >Humor<small>Estados e observações registrados.</small></span
+                ></label
+              ><label
+                ><input name="secao" type="checkbox" value="CONSULTAS" /><span
+                  >Consultas e exames<small
+                    >Compromissos com data dentro do período selecionado.</small
+                  ></span
+                ></label
+              >
+            </div>
+          </fieldset>
+          <div class="feature-actions">
+            <button
+              id="preverRelatorio"
+              class="feature-button secondary"
+              type="submit"
+            >
+              Conferir resumo</button
+            ><button id="baixarPdf" class="feature-button" type="button">
+              <span data-icon="file"></span>Baixar PDF
+            </button>
+          </div>
+        </form>
+        <p
+          id="relatorioMensagem"
+          class="feature-status"
+          role="status"
+          aria-live="polite"
+        ></p>
+        <div class="feature-note">
+          O arquivo é gerado apenas para você baixar. Ele não é enviado a
+          profissionais ou terceiros. Você escolhe com quem compartilhar.
+        </div>
+      </section>
+      <section
+        id="relatorioPreview"
+        class="feature-panel report-preview"
+        hidden
+      >
+        <h2>O que vai no seu resumo</h2>
+        <p id="periodoResumo" class="feature-muted"></p>
+        <div id="relatorioContagens" class="report-summary"></div>
+        <div id="relatorioDetalhes"></div>
+        <p class="feature-muted">
+          Registros pessoais para apoiar a conversa na consulta. O resumo não
+          constitui diagnóstico.
+        </p>
+      </section>
+    </main>
+    <script src="../js/relatorio.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/reminders.js"></script>
+  </body>
+</html>

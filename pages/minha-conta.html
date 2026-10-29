@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Minha conta · Espelho Vital</title>
+    <link rel="stylesheet" href="../css/sidebar.css" />
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/features.css" />
+    <script src="../js/config.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/icons.js"></script>
+    <script src="../js/feature-utils.js"></script>
+  </head>
+  <body class="ev-app">
+    <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+    <main id="conteudo" class="feature-shell">
+      <header class="feature-header">
+        <div>
+          <p class="eyebrow">DO SEU JEITO</p>
+          <h1>Minha conta</h1>
+          <p>
+            Escolha como quer ser lembrada e mantenha o controle das suas
+            informações.
+          </p>
+        </div>
+        <a class="feature-link-button secondary" href="../perfil-detalhes.html"
+          ><span data-icon="user"></span>Meu perfil</a
+        >
+      </header>
+      <div
+        class="feature-tabs"
+        role="tablist"
+        aria-label="Configurações da conta"
+      >
+        <button
+          id="tabLembretes"
+          role="tab"
+          aria-selected="true"
+          aria-controls="painelLembretes"
+        >
+          Lembretes</button
+        ><button
+          id="tabPrivacidade"
+          role="tab"
+          aria-selected="false"
+          aria-controls="painelPrivacidade"
+          tabindex="-1"
+        >
+          Meus dados e privacidade
+        </button>
+      </div>
+      <section
+        id="painelLembretes"
+        class="feature-panel"
+        role="tabpanel"
+        aria-labelledby="tabLembretes"
+      >
+        <h2>Pequenos lembretes, no seu ritmo.</h2>
+        <p class="feature-muted">
+          Nada é ativado sem a sua escolha. Você pode pausar quando quiser.
+        </p>
+        <form id="lembretesForm">
+          <div class="feature-check-list">
+            <label
+              ><input type="checkbox" id="lembretesAtivos" /><span
+                >Ativar meus lembretes<small
+                  >Eles aparecem após o horário escolhido, nos dias
+                  selecionados.</small
+                ></span
+              ></label
+            >
+          </div>
+          <fieldset id="opcoesLembretes" class="feature-fieldset">
+            <legend>Sobre o que você quer ser lembrada?</legend>
+            <div class="feature-check-list">
+              <label
+                ><input type="checkbox" id="lembreteDiario" /><span
+                  >Registrar meu dia</span
+                ></label
+              ><label
+                ><input type="checkbox" id="lembreteSono" /><span
+                  >Registrar meu sono</span
+                ></label
+              ><label
+                ><input type="checkbox" id="lembreteConsultas" /><span
+                  >Consultas e exames próximos</span
+                ></label
+              ><label
+                ><input type="checkbox" id="lembreteCiclo" /><span
+                  >Consultar as estimativas do ciclo</span
+                ></label
+              >
+            </div>
+            <div class="feature-grid">
+              <div class="feature-field">
+                <label for="horarioLembrete">Horário</label
+                ><input id="horarioLembrete" type="time" required />
+              </div>
+              <div class="feature-field">
+                <label for="fusoLembrete">Fuso horário</label
+                ><select id="fusoLembrete" required></select>
+              </div>
+              <div class="feature-field">
+                <label for="diasConsulta"
+                  >Antecedência de consultas (dias)</label
+                ><input
+                  id="diasConsulta"
+                  type="number"
+                  min="0"
+                  max="30"
+                  required
+                />
+              </div>
+              <div class="feature-field">
+                <label for="diasCiclo"
+                  >Antecedência da estimativa do ciclo (dias)</label
+                ><input
+                  id="diasCiclo"
+                  type="number"
+                  min="0"
+                  max="10"
+                  required
+                />
+              </div>
+            </div>
+            <fieldset class="feature-fieldset" style="margin-top: 22px">
+              <legend>Em quais dias?</legend>
+              <div id="diasSemanaLembrete" class="feature-choice-grid"></div>
+            </fieldset>
+            <h3 style="margin-top: 26px">Onde receber</h3>
+            <p class="feature-muted">
+              Lembretes ativos aparecem no sino da página inicial.
+            </p>
+            <div class="feature-check-list">
+              <label
+                ><input id="navegadorLembrete" type="checkbox" /><span
+                  >Notificações deste navegador<small
+                    >Exigem sua permissão e o Espelho Vital aberto em uma aba.
+                    Não funcionam com o navegador fechado.</small
+                  ></span
+                ></label
+              ><label
+                ><input id="emailLembrete" type="checkbox" /><span
+                  >Um lembrete discreto por e-mail<small
+                    id="emailDisponibilidade"
+                    >Verificando disponibilidade…</small
+                  ></span
+                ></label
+              >
+            </div>
+            <button
+              id="permitirNotificacoes"
+              class="feature-button secondary"
+              type="button"
+            >
+              Permitir notificações no navegador
+            </button>
+            <p id="permissaoMensagem" class="feature-muted"></p>
+          </fieldset>
+          <div class="feature-actions" style="margin-top: 22px">
+            <button id="salvarLembretes" type="submit" class="feature-button">
+              Salvar preferências
+            </button>
+          </div>
+        </form>
+        <p id="lembretesMensagem" class="feature-status" role="status"></p>
+      </section>
+      <section
+        id="painelPrivacidade"
+        class="feature-panel"
+        role="tabpanel"
+        aria-labelledby="tabPrivacidade"
+        hidden
+      >
+        <h2>Seus dados continuam sendo seus.</h2>
+        <p class="feature-muted">
+          Exporte uma cópia ou escolha o que deseja remover. Ações sensíveis
+          exigem sua senha.
+        </p>
+        <div id="privacidadeContagens" class="privacy-counts"></div>
+        <div class="privacy-row">
+          <h3>Baixar meus dados</h3>
+          <p>
+            Receba um arquivo JSON com perfil, diário, sono, humor, ciclos,
+            consultas e configurações. Senhas e tokens nunca entram no arquivo.
+          </p>
+          <label class="feature-choice"
+            ><input id="exportarBiometria" type="checkbox" />Incluir também meu
+            descritor facial, se cadastrado</label
+          >
+          <div style="margin-top: 15px">
+            <button
+              id="exportarDados"
+              class="feature-button secondary"
+              type="button"
+            >
+              Baixar cópia dos meus dados
+            </button>
+          </div>
+        </div>
+        <div class="privacy-row">
+          <h3>Cadastro facial</h3>
+          <p id="biometriaEstado">Consultando cadastro…</p>
+          <button
+            id="excluirBiometria"
+            class="feature-button secondary"
+            type="button"
+          >
+            Excluir cadastro facial
+          </button>
+        </div>
+        <div class="privacy-row">
+          <h3>Apagar meus registros</h3>
+          <p>
+            Remove diário, sono, humor, ciclos, consultas e histórico de
+            lembretes. Sua conta, perfil e cadastro facial são mantidos. Os
+            lembretes ficam pausados.
+          </p>
+          <button
+            id="apagarRegistros"
+            class="feature-button danger"
+            type="button"
+          >
+            Apagar registros de saúde
+          </button>
+        </div>
+        <div class="privacy-row">
+          <h3>Excluir minha conta</h3>
+          <p>
+            Remove permanentemente a conta, perfil, biometria e todos os
+            registros vinculados. Essa ação não pode ser desfeita. Você pode
+            exportar uma cópia antes.
+          </p>
+          <button id="excluirConta" class="feature-button danger" type="button">
+            Excluir minha conta
+          </button>
+        </div>
+        <p id="privacidadeMensagem" class="feature-status" role="status"></p>
+      </section>
+      <dialog id="confirmarPrivacidade" class="feature-dialog">
+        <form id="confirmacaoForm">
+          <h2 id="confirmacaoTitulo"></h2>
+          <p id="confirmacaoDescricao"></p>
+          <div class="feature-field">
+            <label for="senhaPrivacidade">Confirme sua senha</label
+            ><input
+              id="senhaPrivacidade"
+              type="password"
+              autocomplete="current-password"
+              maxlength="72"
+              required
+            />
+          </div>
+          <div id="fraseGrupo" class="feature-field" hidden>
+            <label id="fraseRotulo" for="frasePrivacidade"></label
+            ><input id="frasePrivacidade" type="text" autocomplete="off" />
+          </div>
+          <p
+            id="confirmacaoMensagem"
+            class="feature-status error"
+            role="alert"
+          ></p>
+          <div class="feature-actions">
+            <button
+              id="cancelarPrivacidade"
+              class="feature-button secondary"
+              type="button"
+            >
+              Cancelar</button
+            ><button
+              id="executarPrivacidade"
+              class="feature-button"
+              type="submit"
+            >
+              Continuar
+            </button>
+          </div>
+        </form>
+      </dialog>
+    </main>
+    <script src="../js/minha-conta.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/reminders.js"></script>
+  </body>
+</html>

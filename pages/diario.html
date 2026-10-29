@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Meu diário · Espelho Vital</title>
+    <link rel="stylesheet" href="../css/sidebar.css" />
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/features.css" />
+    <script src="../js/config.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/icons.js"></script>
+    <script src="../js/feature-utils.js"></script>
+  </head>
+  <body class="ev-app">
+    <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+    <main class="feature-shell" id="conteudo">
+      <header class="feature-header">
+        <div>
+          <p class="eyebrow">MEU DIÁRIO</p>
+          <h1>Um espaço para o seu dia.</h1>
+          <p>Reúna o que sente, seu descanso e seus sintomas em um só lugar.</p>
+        </div>
+        <a class="feature-link-button secondary" href="relatorio.html"
+          ><span data-icon="file"></span>Resumo para consulta</a
+        >
+      </header>
+      <div class="feature-toolbar">
+        <div class="date-controls">
+          <button
+            id="diaAnterior"
+            class="feature-button secondary"
+            aria-label="Dia anterior"
+          >
+            ‹</button
+          ><label class="sr-only" for="dataDiario">Data do registro</label
+          ><input id="dataDiario" type="date" required /><button
+            id="diaSeguinte"
+            class="feature-button secondary"
+            aria-label="Dia seguinte"
+          >
+            ›</button
+          ><button id="diaHoje" class="feature-button secondary">Hoje</button>
+        </div>
+        <span
+          id="diarioEstado"
+          class="diary-saved-indicator"
+          role="status"
+        ></span>
+      </div>
+      <p
+        id="diarioMensagem"
+        class="feature-status"
+        role="status"
+        aria-live="polite"
+      ></p>
+      <div id="importacaoAntiga" class="feature-note" hidden>
+        Há um registro de sintomas antigo neste dispositivo. Você pode revisá-lo
+        antes de salvar no diário.
+        <button
+          id="importarAntigo"
+          class="feature-button secondary"
+          type="button"
+        >
+          Revisar registro antigo
+        </button>
+      </div>
+      <form id="diarioForm">
+        <section class="feature-panel" id="sintomas">
+          <h2>Seu corpo hoje</h2>
+          <p class="feature-muted">
+            Preencha apenas o que fizer sentido para você.
+          </p>
+          <div class="feature-grid">
+            <div class="feature-field">
+              <label for="fluxo">Fluxo</label
+              ><select id="fluxo">
+                <option value="NAO_INFORMADO">Não informado</option>
+                <option value="SEM_FLUXO">Sem fluxo</option>
+                <option value="ESCAPE">Escape</option>
+                <option value="LEVE">Leve</option>
+                <option value="MODERADO">Moderado</option>
+                <option value="INTENSO">Intenso</option>
+              </select>
+            </div>
+            <div class="feature-field">
+              <label for="intensidadeDor">Intensidade da dor (0 a 10)</label
+              ><select id="intensidadeDor">
+                <option value="">Não informada</option>
+                <option value="0">0 · Sem dor</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10 · Maior intensidade</option>
+              </select>
+            </div>
+            <fieldset class="feature-fieldset feature-span-all">
+              <legend>Sintomas percebidos</legend>
+              <div id="opcoesSintomas" class="feature-choice-grid"></div>
+            </fieldset>
+          </div>
+          <p class="feature-note">
+            Registrar fluxo não altera automaticamente seu calendário. Se for o
+            início de uma menstruação,
+            <a id="registrarInicioCiclo" href="ciclo.html"
+              >registre também a data no calendário</a
+            >.
+          </p>
+        </section>
+        <section class="feature-panel" id="humor">
+          <fieldset class="feature-fieldset">
+            <legend>Como você se sente?</legend>
+            <p class="feature-muted">Você pode escolher mais de um estado.</p>
+            <div id="opcoesHumor" class="feature-choice-grid"></div>
+          </fieldset>
+        </section>
+        <section class="feature-panel" id="sono">
+          <h2>Como foi seu descanso?</h2>
+          <p class="feature-muted">
+            Este registro também aparece no histórico de sono.
+          </p>
+          <div class="feature-grid">
+            <div class="feature-field">
+              <label for="horasSono">Horas de sono</label
+              ><input
+                id="horasSono"
+                type="number"
+                min="0"
+                max="24"
+                step="0.1"
+                placeholder="Ex.: 7,5"
+              /><small>Deixe em branco se não quiser informar.</small>
+            </div>
+            <div class="feature-field">
+              <label for="qualidadeSono">Qualidade percebida</label
+              ><select id="qualidadeSono">
+                <option value="">Avaliar pela duração informada</option>
+                <option>Excelente</option>
+                <option>Boa</option>
+                <option>Regular</option>
+                <option>Ruim</option>
+              </select>
+            </div>
+          </div>
+        </section>
+        <section class="feature-panel">
+          <div class="feature-field">
+            <label for="observacoesDiario"
+              >Quer guardar mais alguma coisa sobre o dia?</label
+            ><textarea
+              id="observacoesDiario"
+              maxlength="2000"
+              placeholder="Algo que mudou na rotina, uma percepção ou uma observação para conversar na consulta…"
+            ></textarea
+            ><small id="contadorObservacoes">0 de 2.000 caracteres</small>
+          </div>
+        </section>
+        <div class="feature-savebar">
+          <small id="alteracoesDiario"
+            >Seus registros ficam vinculados à sua conta.</small
+          >
+          <div class="feature-actions">
+            <button
+              id="excluirDia"
+              type="button"
+              class="feature-button danger"
+              hidden
+            >
+              Excluir registro</button
+            ><button id="salvarDia" type="submit" class="feature-button">
+              Salvar meu dia
+            </button>
+          </div>
+        </div>
+      </form>
+      <section class="feature-panel" id="historico">
+        <h2>Seus dias registrados</h2>
+        <p class="feature-muted">
+          Volte a uma data para consultar ou corrigir as informações.
+        </p>
+        <form id="filtroDiario" class="feature-filters">
+          <div class="feature-field">
+            <label for="historicoInicio">De</label
+            ><input id="historicoInicio" type="date" required />
+          </div>
+          <div class="feature-field">
+            <label for="historicoFim">Até</label
+            ><input id="historicoFim" type="date" required />
+          </div>
+          <button class="feature-button secondary" type="submit">
+            Filtrar
+          </button>
+        </form>
+        <div id="diarioHistorico"></div>
+        <button
+          id="maisDiario"
+          class="feature-button secondary"
+          type="button"
+          hidden
+        >
+          Carregar mais
+        </button>
+      </section>
+    </main>
+    <script src="../js/diario.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/reminders.js"></script>
+  </body>
+</html>

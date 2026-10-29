@@ -1,33 +1,36 @@
-const CHAVE_SINTOMAS = "registroSintomas";
+const CHAVE_SINTOMAS = "registroSintomas:" + localStorage.getItem("usuarioId");
 
 const formSintomas = document.getElementById("sintomasForm");
 const mensagem = document.getElementById("mensagem");
 
 // Verifica se já existe um registro válido (últimas 24h)
 (function verificarRegistro() {
+  const salvo = localStorage.getItem(CHAVE_SINTOMAS);
 
-    const salvo = localStorage.getItem(CHAVE_SINTOMAS);
+  if (!salvo) return;
 
-    if (!salvo) return;
+  let registro;
+  try {
+    registro = JSON.parse(salvo);
+  } catch {
+    localStorage.removeItem(CHAVE_SINTOMAS);
+    return;
+  }
 
-    const registro = JSON.parse(salvo);
+  const agora = Date.now();
 
-    const agora = Date.now();
+  const passou24Horas = agora - registro.dataHora > 24 * 60 * 60 * 1000;
 
-    const passou24Horas =
-        agora - registro.dataHora > 24 * 60 * 60 * 1000;
+  if (passou24Horas) {
+    localStorage.removeItem(CHAVE_SINTOMAS);
 
-    if (passou24Horas) {
+    return;
+  }
 
-        localStorage.removeItem(CHAVE_SINTOMAS);
+  // Ainda não passou 24 horas
+  formSintomas.style.display = "none";
 
-        return;
-    }
-
-    // Ainda não passou 24 horas
-    formSintomas.style.display = "none";
-
-    mensagem.innerHTML = `
+  mensagem.innerHTML = `
         <div style="
             background:#F3E8FF;
             color:#6D28D9;
@@ -40,49 +43,37 @@ const mensagem = document.getElementById("mensagem");
             Um novo registro ficará disponível em até 24 horas.
         </div>
     `;
-
 })();
 
 formSintomas.addEventListener("submit", function (e) {
+  e.preventDefault();
 
-    e.preventDefault();
+  let sintomas = [];
 
-    let sintomas = [];
+  document.querySelectorAll(".sintoma-card input:checked").forEach((item) => {
+    sintomas.push(item.value);
+  });
 
-    document
-        .querySelectorAll(".sintoma-card input:checked")
-        .forEach(item => {
-            sintomas.push(item.value);
-        });
+  const fluxo = document.querySelector("input[name='fluxo']:checked");
 
-    const fluxo = document.querySelector(
-        "input[name='fluxo']:checked"
-    );
+  const registro = {
+    data: document.getElementById("dataSintoma").value,
 
-    const registro = {
+    sintomas: sintomas,
 
-        data: document.getElementById("dataSintoma").value,
+    observacao: document.getElementById("observacao").value,
 
-        sintomas: sintomas,
+    fluxo: fluxo ? fluxo.value : "",
 
-        observacao:
-            document.getElementById("observacao").value,
+    // horário atual
+    dataHora: Date.now(),
+  };
 
-        fluxo: fluxo ? fluxo.value : "",
+  localStorage.setItem(CHAVE_SINTOMAS, JSON.stringify(registro));
 
-        // horário atual
-        dataHora: Date.now()
+  formSintomas.style.display = "none";
 
-    };
-
-    localStorage.setItem(
-        CHAVE_SINTOMAS,
-        JSON.stringify(registro)
-    );
-
-    formSintomas.style.display = "none";
-
-    mensagem.innerHTML = `
+  mensagem.innerHTML = `
         <div style="
             background:#E9FBEA;
             color:#2E7D32;
@@ -95,5 +86,4 @@ formSintomas.addEventListener("submit", function (e) {
             Você poderá registrar novamente daqui a 24 horas.
         </div>
     `;
-
 });

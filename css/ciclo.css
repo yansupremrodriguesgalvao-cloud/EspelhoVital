@@ -1,959 +1,439 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, sans-serif;
+* {
+  box-sizing: border-box;
 }
-
-
-body{
-
-    background:linear-gradient(
-        135deg,
-        #2E1065,
-        #4C1D95,
-        #6D28D9,
-        #A855F7
-    );
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    min-height:100vh;
-
-    padding:20px;
-
+body {
+  margin: 0;
+  background: #f5f2fa;
+  color: #302241;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
 }
-
-
-
-.container{
-
-    width:900px;
-    max-width:95%;
-
-    background:white;
-
-    padding:30px;
-
-    border-radius:20px;
-
-    box-shadow:
-    0 5px 20px rgba(0,0,0,0.1);
-
+.container {
+  max-width: 1120px;
+  margin: 35px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px #39205e0c;
 }
-
-
-
-h1{
-
-    text-align:center;
-
-    color:#8a63d2;
-
-    margin-bottom:25px;
-
+h1 {
+  margin: 4px 0;
+  font-size: 30px;
 }
-
-
-
-label{
-
-    display:block;
-
-    margin-bottom:5px;
-
-    font-weight:bold;
-
-    color:#555;
-
+h2 {
+  font-size: 20px;
 }
-
-
-
+.eyebrow {
+  color: #8455b8;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.page-header p {
+  margin: 5px 0;
+}
+.resumo-ciclo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 28px 0;
+}
+.resumo-ciclo article {
+  background: #f6f0ff;
+  padding: 20px;
+  border-radius: 16px;
+}
+.resumo-ciclo span {
+  display: block;
+  font-size: 13px;
+  color: #6b597c;
+}
+.resumo-ciclo strong {
+  display: block;
+  font-size: 20px;
+  margin-top: 8px;
+}
+button {
+  background: #7041ab;
+  color: white;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 17px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+button:hover {
+  filter: brightness(0.95);
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.secundario {
+  background: #eee8f5;
+  color: #58357f;
+}
 input,
-select{
-
-    width:100%;
-
-    padding:12px;
-
-    margin-bottom:15px;
-
-    border:1px solid #d8c8ff;
-
-    border-radius:10px;
-
-    outline:none;
-
-    font-size:14px;
-
-    background:white;
-
-    color:#333;
-
+select {
+  font: inherit;
+  max-width: 100%;
+  padding: 10px;
+  border: 1px solid #d8cae8;
+  border-radius: 8px;
+  background: white;
+  color: #302241;
 }
-
-
-
-input:focus,
-select:focus{
-
-    border-color:#b79cff;
-
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
 }
-
-
-
-.ajuda{
-
-    color:#777;
-
-    font-size:13px;
-
-    margin-bottom:16px;
-
-    line-height:1.5;
-
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin: 18px 0;
 }
-
-
-
-button{
-
-    width:100%;
-
-    padding:12px;
-
-    border:none;
-
-    border-radius:10px;
-
-    background:#cdb4ff;
-
-    color:white;
-
-    font-size:16px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
+.form-grid input,
+.form-grid select {
+  width: 100%;
 }
-
-
-
-button:hover{
-
-    background:#b79cff;
-
+.form-actions {
+  display: flex;
+  gap: 10px;
 }
-
-
-
-.btn-secundario{
-
-    margin-top:12px;
-
-    background:#f3e8ff;
-
-    color:#6d28d9;
-
+.registro-section {
+  background: #faf7ff;
+  padding: 24px;
+  border: 1px solid #e4d6f4;
+  border-radius: 16px;
+  margin: 22px 0;
 }
-
-
-
-
-
-#resultado{
-
-    margin-top:20px;
-
-    padding:15px;
-
-    background:#f8f4ff;
-
-    border-radius:10px;
-
+.aviso {
+  background: #fff7e9;
+  border-left: 3px solid #d09a37;
+  padding: 14px 18px;
+  border-radius: 8px;
+  color: #725425;
+  font-size: 14px;
 }
-
-
-
-
-
-/* ================= CALENDÁRIO ================= */
-
-
-
-#calendarioContainer{
-
-    margin-top:40px;
-
+.ajuda {
+  font-size: 13px;
+  color: #756582;
 }
-
-
-
-
-
-.calendario-header{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:20px;
-
+.calendario-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 25px 0 18px;
 }
-
-
-
-
-
-.calendario-header button{
-
-    width:45px;
-
-    height:45px;
-
-    border-radius:50%;
-
-    padding:0;
-
+.calendario-header h2 {
+  flex: 1;
+  text-transform: capitalize;
 }
-
-
-
-
-
-.calendario-header h2{
-
-    color:#8a63d2;
-
+.calendario-header button {
+  padding: 8px 14px;
 }
-
-
-
-
-
-
-.dias-semana{
-
-    display:grid;
-
-    grid-template-columns:repeat(7,1fr);
-
-    text-align:center;
-
-    font-weight:bold;
-
-    color:#666;
-
-    margin-bottom:15px;
-
+.legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  font-size: 12px;
+  margin-bottom: 20px;
 }
-
-
-
-
-
-
-.calendario{
-
-    display:grid;
-
-    grid-template-columns:repeat(7,1fr);
-
-    gap:12px;
-
+.legenda span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
-
-
-
-
-
-/* BOLINHAS DOS DIAS */
-
-
-
-.dia{
-
-    width:48px;
-
-    height:48px;
-
-    border-radius:50%;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    margin:auto;
-
-    font-weight:bold;
-
-    font-size:16px;
-
-    cursor:pointer;
-
-    transition:.2s;
-
-    background:#efefef;
-
-    color:#444;
-
+.legenda i {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  border-radius: 4px;
 }
-
-
-
-.dia:hover{
-
-    transform:scale(1.1);
-
+.menstruacao {
+  background: #a53366 !important;
+  color: white !important;
 }
-
-
-
-
-
-/* DIA NORMAL */
-
-.normal{
-
-    background:#efefef;
-
+.prevista {
+  background: #f8d9e8 !important;
+  color: #793054 !important;
+  border: 1px dashed #b45a84 !important;
 }
-
-
-
-
-
-/* MENSTRUAÇÃO */
-
-.menstruacao{
-
-    background:#ffd6e7;
-
-    color:#c2185b;
-
-}
-
-
-
-
-
-/* PERÍODO FÉRTIL */
-
-.fertil{
-
-    background:#d9f2ff;
-
-    color:#1976d2;
-
-}
-
-
-
-
-
-/* OVULAÇÃO */
-
-.ovulacao{
-
-    background:#ead8ff;
-
-    color:#6d28d9;
-
-}
-
-
-
-
-
-/* LEGENDA */
-
-
-
-.legenda{
-
-    margin-top:30px;
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:25px;
-
-    flex-wrap:wrap;
-
-}
-
-
-
-.item-legenda{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:8px;
-
-}
-
-
-
-.cor{
-
-    width:18px;
-
-    height:18px;
-
-    border-radius:50%;
-
-}
-
-
-
-.cor.normal{
-
-    background:#efefef;
-
-}
-
-
-
-.cor.menstruacao{
-
-    background:#ffd6e7;
-
-}
-
-
-
-.cor.fertil{
-
-    background:#d9f2ff;
-
-}
-
-
-
-.cor.ovulacao{
-
-    background:#ead8ff;
-
-}
-*{
-
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-    
-    }
-    
-    
-    
-    body{
-    
-    background:linear-gradient(
+.incerta {
+  background: repeating-linear-gradient(
     135deg,
-    #2E1065,
-    #6D28D9,
-    #C084FC
-    );
-    
-    
-    min-height:100vh;
-    
-    display:flex;
-    
-    justify-content:center;
-    
-    align-items:center;
-    
-    padding:20px;
-    
-    }
-    
-    
-    
-    .container{
-    
-    width:500px;
-    
-    max-width:95%;
-    
-    background:white;
-    
-    padding:30px;
-    
-    border-radius:25px;
-    
-    box-shadow:
-    0 5px 20px rgba(0,0,0,.15);
-    
-    }
-    
-    
-    
-    h1{
-    
-    text-align:center;
-    
-    color:#8a63d2;
-    
-    margin-bottom:20px;
-    
-    }
-    
-    
-    
-    .ajuda{
-    
-    color:#777;
-    
-    font-size:14px;
-    
-    line-height:1.5;
-    
-    margin-bottom:20px;
-    
-    }
-    
-    
-    
-    label{
-    
-    display:block;
-    
-    font-weight:bold;
-    
-    color:#555;
-    
-    margin-bottom:8px;
-    
-    }
-    
-    
-    
-    input[type="date"],
-    
-    textarea{
-    
-    
-    width:100%;
-    
-    padding:12px;
-    
-    border-radius:12px;
-    
-    border:1px solid #dec8ff;
-    
-    margin-bottom:20px;
-    
-    }
-    
-    
-    
-    textarea{
-    
-    height:100px;
-    
-    resize:none;
-    
-    }
-    
-    
-    
-    
-    .sintomas{
-    
-    display:grid;
-    
-    grid-template-columns:1fr 1fr;
-    
-    gap:12px;
-    
-    margin-bottom:20px;
-    
-    }
-    
-    
-    
-    
-    .sintoma-card{
-    
-    background:#faf5ff;
-    
-    padding:14px;
-    
-    border-radius:15px;
-    
-    cursor:pointer;
-    
-    transition:.2s;
-    
-    }
-    
-    
-    
-    .sintoma-card:hover{
-    
-    background:#f3e8ff;
-    
-    transform:scale(1.03);
-    
-    }
-    
-    
-    
-    
-    .sintoma-card input{
-    
-    margin-right:8px;
-    
-    }
-    
-    
-    
-    
-    
-    .fluxo{
-    
-    display:flex;
-    
-    gap:10px;
-    
-    margin-bottom:20px;
-    
-    }
-    
-    
-    
-    
-    .fluxo label{
-    
-    flex:1;
-    
-    text-align:center;
-    
-    padding:15px;
-    
-    border-radius:18px;
-    
-    cursor:pointer;
-    
-    }
-    
-    
-    
-    
-    
-    .leve{
-    
-    background:#ffd6e7;
-    
-    }
-    
-    
-    
-    
-    
-    .medio{
-    
-    background:#e9ddff;
-    
-    }
-    
-    
-    
-    
-    
-    .intenso{
-    
-    background:#ffcdd2;
-    
-    }
-    
-    
-    
-    
-    
-    button{
-    
-    width:100%;
-    
-    padding:14px;
-    
-    border:none;
-    
-    border-radius:15px;
-    
-    background:#cdb4ff;
-    
-    color:white;
-    
-    font-size:16px;
-    
-    font-weight:bold;
-    
-    cursor:pointer;
-    
-    }
-    
-    
-    
-    button:hover{
-    
-    background:#b79cff;
-    
-    }
-    
-    
-    
-    
-    #mensagem{
-    
-    margin-top:20px;
-    
-    text-align:center;
-    
-    font-weight:bold;
-    
-    }
-    /* ================= RESPONSIVIDADE ================= */
-
-
-@media (max-width: 768px){
-
-
-    body{
-
-        padding:15px;
-
-        align-items:flex-start;
-
-    }
-
-
-
-    .container{
-
-        width:100%;
-
-        padding:20px;
-
-        border-radius:20px;
-
-    }
-
-
-
-    h1{
-
-        font-size:24px;
-
-    }
-
-
-
-    .sintomas{
-
-        grid-template-columns:1fr;
-
-    }
-
-
-
-    .fluxo{
-
-        flex-direction:column;
-
-    }
-
-
-
-    .fluxo label{
-
-        width:100%;
-
-    }
-
-
-
-    button{
-
-        font-size:15px;
-
-        padding:13px;
-
-    }
-
-
+    #fcf0da,
+    #fcf0da 4px,
+    #fff8ee 4px,
+    #fff8ee 8px
+  ) !important;
+  color: #755324 !important;
+}
+.fertil {
+  background: #dcefe9 !important;
+  color: #275e50 !important;
+}
+.ovulacao {
+  background: #8051b5 !important;
+  color: white !important;
+}
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+.week-label {
+  font-size: 12px;
+  text-align: center;
+  color: #84718e;
+  padding: 6px;
+}
+.dia {
+  min-height: 56px;
+  width: 100%;
+  padding: 8px 0;
+  background: #f7f5fa;
+  color: #4e3c61;
+  border: 1px solid transparent;
+  font-weight: 400;
+  border-radius: 9px;
+}
+.dia.hoje {
+  outline: 2px solid #7041ab;
+  outline-offset: 1px;
+}
+.dia:focus-visible,
+button:focus-visible {
+  outline: 3px solid #44206d;
+  outline-offset: 2px;
+}
+.month-panel h3 {
+  text-align: center;
+  text-transform: capitalize;
+}
+#calendarios.anual {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+#calendarios.anual .dia {
+  min-height: 35px;
+  font-size: 12px;
+}
+.historico-section {
+  margin-top: 35px;
+}
+.history-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee8f5;
+}
+.history-row .history-text {
+  flex: 1;
+}
+.history-row p {
+  margin: 3px 0;
+  font-size: 13px;
+  color: #756582;
+}
+.history-row button {
+  font-size: 13px;
+  padding: 8px 12px;
+}
+dialog {
+  border: 0;
+  border-radius: 18px;
+  max-width: 430px;
+  padding: 28px;
+  box-shadow: 0 15px 60px #23103544;
+}
+dialog::backdrop {
+  background: #23103566;
+}
+dialog button {
+  margin: 5px;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+[hidden] {
+  display: none !important;
+}
+#statusCiclo {
+  color: #9a3459;
+}
+#statusCiclo:empty {
+  display: none;
+}
+@media (max-width: 850px) {
+  .container {
+    margin: 15px;
+    padding: 20px;
+  }
+  #calendarios.anual {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .resumo-ciclo strong {
+    font-size: 17px;
+  }
+}
+@media (max-width: 540px) {
+  .resumo-ciclo {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .resumo-ciclo article {
+    padding: 14px;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .calendario-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .calendario-header h2 {
+    font-size: 17px;
+  }
+  .dia {
+    min-height: 43px;
+  }
+  #calendarios.anual {
+    grid-template-columns: 1fr;
+  }
+  .history-row {
+    flex-wrap: wrap;
+  }
+  .history-text {
+    min-width: 100%;
+  }
+  h1 {
+    font-size: 25px;
+  }
 }
 
-
-
-
-
-@media (max-width: 480px){
-
-
-    .container{
-
-        padding:15px;
-
-    }
-
-
-
-    h1{
-
-        font-size:21px;
-
-    }
-
-
-
-    .ajuda{
-
-        font-size:13px;
-
-    }
-
-
-
-    .sintoma-card{
-
-        padding:12px;
-
-        font-size:14px;
-
-    }
-
-
-
-    input[type="date"],
-    textarea{
-
-        font-size:14px;
-
-    }
-
+.cycle-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
 }
-/* ================= MODAL DO DIA ================= */
-
-.modal{
-    display:none;
-    position:fixed;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,.45);
-    justify-content:center;
-    align-items:center;
-    z-index:999;
+.cycle-actions button {
+  width: auto;
 }
-
-.modal-conteudo{
-
-    width:420px;
-    max-width:95%;
-
-    background:white;
-
-    border-radius:20px;
-
-    padding:25px;
-
-    position:relative;
-
-    animation:aparecer .3s ease;
+.cycle-tip {
+  font-size: 13px;
+  color: #82718f;
+  line-height: 1.8;
+  margin: 16px 0;
 }
-
-@keyframes aparecer{
-
-    from{
-        transform:scale(.8);
-        opacity:0;
-    }
-
-    to{
-        transform:scale(1);
-        opacity:1;
-    }
-
+.cycle-undo {
+  width: auto;
+  margin: 8px 0 0;
+  padding: 8px 12px;
+  font-size: 12px;
+}
+.dia.inicio-confirmado {
+  box-shadow: inset 0 0 0 2px #75274d;
+}
+#detalheDia {
+  width: min(440px, calc(100vw - 32px));
+  padding: 26px;
+}
+#detalheDia #tituloDia {
+  margin: 8px 0;
+  font-size: 23px;
+}
+#detalheDia #dataDetalhe {
+  font-size: 17px;
+  font-weight: 500;
+  color: #8b5cb0;
+  margin-bottom: 18px;
+}
+#detalheDia #descricaoDia {
+  font-size: 14px;
+  line-height: 1.8;
+}
+.cycle-dialog-note {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #8a739b;
+  background: #f8f3fd;
+  border-radius: 10px;
+  padding: 13px;
+  margin: 14px 0;
+}
+.cycle-dialog-note:empty,
+.cycle-dialog-error:empty {
+  display: none;
+}
+.cycle-dialog-error {
+  color: #9a3459;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.cycle-dialog-actions {
+  display: grid;
+  gap: 8px;
+  margin-top: 20px;
+}
+.cycle-dialog-actions button {
+  width: 100%;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.cycle-dialog-actions button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+@media (max-width: 540px) {
+  .cycle-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .cycle-actions button {
+    flex: 1;
+  }
+  .cycle-dialog-actions button {
+    padding: 13px;
+  }
 }
 
-.fechar{
-
-    position:absolute;
-
-    right:18px;
-
-    top:12px;
-
-    font-size:28px;
-
-    cursor:pointer;
-
-    color:#8a63d2;
-
+#fimPeriodo {
+  margin: 20px 0;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
 }
-
-#conteudoDia{
-
-    margin-top:15px;
-
-    line-height:2;
-
+#fimPeriodo label {
+  display: block;
+  margin-bottom: 8px;
 }
-
-.card-info{
-
-    background:#faf7ff;
-
-    border-radius:15px;
-
-    padding:12px;
-
-    margin-bottom:10px;
-
-}
-
-.card-info strong{
-
-    color:#8a63d2;
-
-}
-
-.dia{
-
-    position:relative;
-}
-
-.dia.com-registro::after{
-
-    content:"";
-
-    width:8px;
-
-    height:8px;
-
-    border-radius:50%;
-
-    background:#8a63d2;
-
-    position:absolute;
-
-    top:5px;
-
-    right:5px;
-
+#fimPeriodo input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  margin-bottom: 12px;
+  font: inherit;
 }

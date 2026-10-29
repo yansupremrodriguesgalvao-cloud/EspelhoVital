@@ -1,786 +1,225 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-
-<head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Espelho Vital</title>
-
-    <link rel="stylesheet" href="../css/ciclo.css">
-    <link rel="stylesheet" href="../css/sidebar.css">
-
-</head>
-
-
-<body>
-
-
-<div class="container">
-
-
-    <h1>💜 Ciclo Menstrual</h1>
-
-
-
-    <!-- FORMULÁRIO -->
-
-    <form id="cicloForm">
-
-
-        <p class="ajuda">
-
-            Preencha uma única vez. Depois disso, seus próximos períodos
-            e fase fértil serão calculados automaticamente.
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Meu calendário menstrual — Espelho Vital</title>
+    <link rel="stylesheet" href="../css/sidebar.css" />
+    <link rel="stylesheet" href="../css/ciclo.css" />
+    <script src="../js/config.js"></script>
+    <script src="../js/api.js"></script>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <script src="../js/icons.js"></script>
+    <link rel="stylesheet" href="../css/features.css" />
+  </head>
+  <body class="ev-app">
+    <main class="container">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">SEU CORPO, SEU RITMO</p>
+          <h1>Meu calendário menstrual</h1>
+          <p>Acompanhe seus registros e as estimativas dos próximos ciclos.</p>
+        </div>
+        <div class="cycle-actions">
+          <button id="novoRegistro" type="button">
+            Fazer primeiro registro
+          </button>
+          <button id="ajustarCiclo" type="button" class="secundario" hidden>
+            Ajustar informações
+          </button>
+        </div>
+      </header>
+      <p id="statusCiclo" role="status" aria-live="polite"></p>
+      <button
+        id="desfazerInicio"
+        type="button"
+        class="cycle-undo secundario"
+        hidden
+      >
+        Desfazer último registro
+      </button>
+      <p class="cycle-tip" id="ajudaRegistro">
+        No primeiro registro, informe as características do seu ciclo. Depois,
+        basta tocar na data em que a menstruação começar.
+      </p>
+      <section class="resumo-ciclo" aria-label="Resumo">
+        <article>
+          <span>Próximo início estimado</span
+          ><strong id="proximoInicio">—</strong>
+        </article>
+        <article>
+          <span>Intervalo entre menstruações</span
+          ><strong id="intervaloCiclo">—</strong>
+        </article>
+        <article>
+          <span>Menstruações registradas</span
+          ><strong id="totalCiclos">0</strong>
+        </article>
+      </section>
+      <p id="avisoCiclo" class="aviso"></p>
+      <p id="atualizacaoPendente" class="aviso" hidden>
+        A previsão anterior passou. Registre a data real quando a menstruação
+        começar. O calendário não confirma que um novo ciclo aconteceu.
+      </p>
+      <section id="registroSection" class="registro-section" hidden>
+        <h2 id="tituloFormulario">Registrar menstruação</h2>
+        <p>
+          Informe uma data real de início. Para corrigir um registro, use
+          “Editar” no histórico.
         </p>
-
-
-
-        <label>
-
-            Data da Última Menstruação
-
-        </label>
-
-
-        <input 
-            type="date"
-            id="dataUltimaMenstruacao"
-            required
-        >
-
-
-
-        <label>
-
-            Duração do Ciclo
-
-        </label>
-
-
-        <select id="duracaoCicloSelect" required>
-
-
-            <option value="" disabled selected>
-
-                Selecione a duração
-
-            </option>
-
-
-            <option value="21">
-
-                21 dias
-
-            </option>
-
-
-            <option value="24">
-
-                24 dias
-
-            </option>
-
-
-            <option value="26">
-
-                26 dias
-
-            </option>
-
-
-            <option value="28">
-
-                28 dias (mais comum)
-
-            </option>
-
-
-            <option value="30">
-
-                30 dias
-
-            </option>
-
-
-            <option value="32">
-
-                32 dias
-
-            </option>
-
-
-            <option value="35">
-
-                35 dias
-
-            </option>
-
-
-            <option value="outro">
-
-                Outro (meu ciclo é diferente)
-
-            </option>
-
-
-        </select>
-
-
-
-        <input
-
-            type="number"
-
-            id="duracaoCicloOutro"
-
-            placeholder="Digite a duração do seu ciclo"
-
-            min="15"
-
-            max="60"
-
-            style="display:none;"
-
-        >
-
-
-
-
-        <label>
-
-            Duração da Menstruação (dias)
-
-        </label>
-
-
-
-        <input
-
-            type="number"
-
-            id="duracaoMenstruacao"
-
-            min="1"
-
-            max="15"
-
-            required
-
-        >
-
-
-
-
-        <button type="submit">
-
-            Calcular Ciclo
-
-        </button>
-
-
-
-    </form>
-
-
-
-
-
-    <!-- RESULTADO -->
-
-
-    <div id="resultado" style="display:none;"></div>
-
-
-
-    <button
-
-        id="btnRecalcular"
-
-        class="btn-secundario"
-
-        style="display:none;"
-
-    >
-
-        🔄 Registrar novo ciclo
-
-    </button>
-
-
-
-
-
-
-
-    <!-- ================= CALENDÁRIO ================= -->
-
-
-
-    <div id="calendarioContainer">
-
-
-
+        <form id="cicloForm">
+          <div class="form-grid">
+            <div>
+              <label for="dataUltimaMenstruacao"
+                >Primeiro dia da menstruação</label
+              ><input id="dataUltimaMenstruacao" type="date" required />
+            </div>
+            <div>
+              <label for="duracaoMenstruacao"
+                >Duração do sangramento (dias)</label
+              ><input
+                id="duracaoMenstruacao"
+                type="number"
+                min="1"
+                max="15"
+                value="5"
+                required
+              />
+            </div>
+            <div>
+              <label for="duracaoCiclo"
+                >Intervalo estimado entre inícios (dias)</label
+              ><input
+                id="duracaoCiclo"
+                type="number"
+                min="15"
+                max="180"
+                value="28"
+                required
+              />
+            </div>
+            <div>
+              <label for="irregular">Como é seu ciclo?</label
+              ><select id="irregular">
+                <option value="false">Geralmente regular</option>
+                <option value="true">Irregular / varia bastante</option>
+              </select>
+            </div>
+          </div>
+          <div id="faixaIrregular" class="form-grid" hidden>
+            <div>
+              <label for="duracaoMinima">Menor intervalo habitual (dias)</label
+              ><input
+                id="duracaoMinima"
+                type="number"
+                min="15"
+                max="180"
+                value="24"
+              />
+            </div>
+            <div>
+              <label for="duracaoMaxima">Maior intervalo habitual (dias)</label
+              ><input
+                id="duracaoMaxima"
+                type="number"
+                min="15"
+                max="180"
+                value="40"
+              />
+            </div>
+          </div>
+          <p class="ajuda">
+            O histórico ajuda a atualizar o intervalo estimado. Ciclos
+            irregulares aparecem como faixas de datas, sem previsão de ovulação.
+          </p>
+          <div class="form-actions">
+            <button type="submit" id="salvarRegistro">Salvar registro</button
+            ><button type="button" id="cancelarRegistro" class="secundario">
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </section>
+      <section aria-label="Calendário">
         <div class="calendario-header">
-
-
-            <button id="mesAnterior">
-
-                ❮
-
-            </button>
-
-
-
-            <h2 id="mesAno"></h2>
-
-
-
-            <button id="proximoMes">
-
-                ❯
-
-            </button>
-
-
+          <button id="mesAnterior" aria-label="Mês anterior">‹</button>
+          <h2 id="mesAno"></h2>
+          <button id="proximoMes" aria-label="Próximo mês">›</button
+          ><button id="hoje" class="secundario">Hoje</button
+          ><label for="visao" class="sr-only">Visualização</label
+          ><select id="visao">
+            <option value="mes">Um mês</option>
+            <option value="ano">Doze meses</option>
+          </select>
         </div>
-
-
-
-
-
-        <div class="dias-semana">
-
-
-            <span>
-
-                Dom
-
-            </span>
-
-
-            <span>
-
-                Seg
-
-            </span>
-
-
-            <span>
-
-                Ter
-
-            </span>
-
-
-            <span>
-
-                Qua
-
-            </span>
-
-
-            <span>
-
-                Qui
-
-            </span>
-
-
-            <span>
-
-                Sex
-
-            </span>
-
-
-            <span>
-
-                Sáb
-
-            </span>
-
-
-
-        </div>
-
-
-
-
-
-        <div id="calendario" class="calendario">
-
-
-        </div>
-
-
-
-
-
         <div class="legenda">
-
-
-            <div class="item-legenda">
-
-
-                <span class="cor menstruacao"></span>
-
-                Menstruação
-
-
-            </div>
-
-
-
-            <div class="item-legenda">
-
-
-                <span class="cor fertil"></span>
-
-                Período fértil
-
-
-            </div>
-
-
-
-            <div class="item-legenda">
-
-
-                <span class="cor ovulacao"></span>
-
-                Ovulação
-
-
-            </div>
-
-
-
-            <div class="item-legenda">
-
-
-                <span class="cor normal"></span>
-
-                Dia comum
-
-
-            </div>
-
-
+          <span><i class="menstruacao"></i>Menstruação registrada</span
+          ><span><i class="prevista"></i>Menstruação estimada</span
+          ><span><i class="incerta"></i>Faixa de início possível</span
+          ><span><i class="fertil"></i>Período fértil estimado</span
+          ><span><i class="ovulacao"></i>Ovulação estimada</span>
         </div>
-
-
-
-    </div>
-
-
-
-</div>
-
-
-
-
-
-<script src="../js/ciclo.js"></script>
-
-<script src="../js/sidebar.js"></script>
-
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Espelho Vital - Sintomas</title>
-
-<link rel="stylesheet" href="../css/sintomas.css">
-
-</head>
-
-
-<body>
-
-
-<div class="container">
-
-
-<h1>🌸 Registro de Sintomas</h1>
-
-
-<p class="ajuda">
-
-Registre seus sintomas e o fluxo menstrual para acompanhar
-melhor seu ciclo.
-
-</p>
-
-
-
-<form id="sintomasForm">
-
-
-
-<label>
-📅 Data do registro
-</label>
-
-
-<input 
-type="date"
-id="dataSintoma"
-required
->
-
-
-
-
-<label>
-💭 Sintomas apresentados
-</label>
-
-
-
-
-<div class="sintomas">
-
-
-<label class="sintoma-card">
-
-<input 
-type="checkbox"
-value="Cólicas"
->
-
-🌸 Cólicas
-
-</label>
-
-
-
-
-<label class="sintoma-card">
-
-<input 
-type="checkbox"
-value="Dor de cabeça"
->
-
-🤕 Dor de cabeça
-
-</label>
-
-
-
-
-
-<label class="sintoma-card">
-
-<input 
-type="checkbox"
-value="Dor nas costas"
->
-
-💜 Dor nas costas
-
-</label>
-
-
-
-
-
-<label class="sintoma-card">
-
-<input 
-type="checkbox"
-value="Alteração de humor"
->
-
-😊 Alteração de humor
-
-</label>
-
-
-
-
-
-<label class="sintoma-card">
-
-<input 
-type="checkbox"
-value="Cansaço"
->
-
-😴 Cansaço
-
-</label>
-
-
-
-
-
-<label class="sintoma-card">
-
-<input 
-type="checkbox"
-value="Inchaço"
->
-
-🌷 Inchaço
-
-</label>
-
-
-
-
-
-<label class="sintoma-card">
-
-<input 
-type="checkbox"
-value="Sensibilidade nos seios"
->
-
-🌺 Sensibilidade nos seios
-
-</label>
-
-
-</div>
-
-
-
-
-
-
-
-<label>
-📝 Observações pessoais
-</label>
-
-
-<textarea 
-id="observacao"
-placeholder="Digite alguma observação..."
-></textarea>
-
-
-
-
-
-
-
-<label>
-🩸 Intensidade do fluxo menstrual
-</label>
-
-
-
-<div class="fluxo">
-
-
-<label class="leve">
-
-<input 
-type="radio"
-name="fluxo"
-value="Leve"
-required
->
-
-🌸 Leve
-
-</label>
-
-
-
-
-<label class="medio">
-
-<input 
-type="radio"
-name="fluxo"
-value="Médio"
->
-
-🌺 Médio
-
-</label>
-
-
-
-
-<label class="intenso">
-
-<input 
-type="radio"
-name="fluxo"
-value="Intenso"
->
-
-🌹 Intenso
-
-</label>
-
-
-
-</div>
-
-
-
-
-
-
-<button type="submit">
-
-💾 Salvar Registro
-
-</button>
-
-
-
-</form>
-
-
-
-
-<div id="mensagem"></div>
-
-
-
-</div>
-
-
-
-
-<script src="../js/sintomas.js"></script>
-
-
-<!-- ================= HISTÓRICO MENSTRUAL (unificado nesta página) ================= -->
-
-<style>
-
-    .hm-wrap{
-        width:900px;
-        max-width:95%;
-        margin:40px auto;
-        background:white;
-        padding:30px;
-        border-radius:20px;
-        box-shadow:0 5px 20px rgba(0,0,0,0.1);
-        font-family:Arial, sans-serif;
-    }
-
-    .hm-wrap h2{
-        color:#8a63d2;
-        margin-bottom:8px;
-    }
-
-    .hm-wrap .hm-sub{
-        opacity:.7;
-        font-size:.88rem;
-        margin-bottom:16px;
-    }
-
-    .hm-card{
-        background:#f8f4ff;
-        border-radius:12px;
-        padding:16px;
-        margin-bottom:16px;
-    }
-
-    .hm-card h3{
-        color:#6d28d9;
-        margin-bottom:8px;
-    }
-
-</style>
-
-<div class="hm-wrap">
-
-    <h2>📅 Histórico Menstrual</h2>
-    <p class="hm-sub">
-        Veja todos os ciclos que você já registrou e como eles evoluíram.
-    </p>
-
-    <div id="historicoMenstrualConteudo">
-        <p>⏳ Carregando registros...</p>
-    </div>
-
-</div>
-
-<script>
-
-async function carregarHistoricoMenstrual() {
-
-    try {
-
-        const usuarioId = localStorage.getItem("usuarioId");
-        const url = usuarioId
-            ? `http://localhost:8081/ciclo?usuarioId=${usuarioId}`
-            : "http://localhost:8081/ciclo";
-
-        const resposta = await fetch(url);
-        const registros = await resposta.json();
-
-        const area = document.getElementById("historicoMenstrualConteudo");
-
-        if (!registros.length) {
-            area.innerHTML = `
-                <div class="hm-card">
-                    <p>Nenhum ciclo registrado ainda.</p>
-                </div>
-            `;
-            return;
-        }
-
-        let html = "";
-
-        registros.slice().reverse().forEach(c => {
-
-            html += `
-                <div class="hm-card">
-
-                    <h3>🌸 Última menstruação: ${formatarDataHM(c.dataUltimaMenstruacao)}</h3>
-
-                    <p><strong>Duração do ciclo:</strong> ${c.duracaoCiclo ?? "--"} dias</p>
-                    <p><strong>Duração da menstruação:</strong> ${c.duracaoMenstruacao ?? "--"} dias</p>
-                    <p><strong>Próxima menstruação prevista:</strong> ${formatarDataHM(c.proximaMenstruacao)}</p>
-                    <p><strong>Ovulação prevista:</strong> ${formatarDataHM(c.ovulacao)}</p>
-                    <p><strong>Período fértil:</strong> ${formatarDataHM(c.inicioPeriodoFertil)} a ${formatarDataHM(c.fimPeriodoFertil)}</p>
-
-                </div>
-            `;
-        });
-
-        area.innerHTML = html;
-
-    } catch (erro) {
-
-        console.error(erro);
-
-        document.getElementById("historicoMenstrualConteudo").innerHTML = `
-            <div class="hm-card">
-                <p>❌ Erro ao conectar com o servidor.</p>
-            </div>
-        `;
-    }
-}
-
-function formatarDataHM(dataIso) {
-    if (!dataIso) return "--";
-    const [ano, mes, dia] = dataIso.split("-");
-    return `${dia}/${mes}/${ano}`;
-}
-
-carregarHistoricoMenstrual();
-
-</script>
-
-
-</body>
-
+        <div id="calendarios" aria-live="polite"></div>
+      </section>
+      <section class="feature-panel" style="margin-top: 28px">
+        <h2>Como seu ciclo tem variado</h2>
+        <div id="variacoesConteudo">
+          <p class="feature-muted">Carregando intervalos registrados…</p>
+        </div>
+        <a class="text-link" href="relatorio.html"
+          >Levar um resumo para a consulta</a
+        >
+      </section>
+      <section class="historico-section">
+        <h2>Seu histórico</h2>
+        <p>
+          Novos registros atualizam as próximas previsões. Editar ou excluir
+          também recalcula o calendário.
+        </p>
+        <div id="historicoCiclos"></div>
+      </section>
+      <p class="ajuda">
+        Este calendário não diagnostica irregularidade, não confirma ovulação e
+        não deve ser usado para evitar gravidez. Se uma mudança no ciclo
+        preocupar você, procure orientação de um profissional de saúde.
+      </p>
+      <dialog
+        id="detalheDia"
+        aria-labelledby="tituloDia"
+        aria-describedby="descricaoDia"
+      >
+        <p class="eyebrow">SEU CALENDÁRIO</p>
+        <h2 id="tituloDia">Registrar início</h2>
+        <h2 id="dataDetalhe"></h2>
+        <p id="descricaoDia"></p>
+        <p id="configuracaoDia" class="cycle-dialog-note"></p>
+        <div id="fimPeriodo" hidden>
+          <label for="ultimoDiaSangramento"
+            >Último dia em que houve sangramento</label
+          >
+          <input type="date" id="ultimoDiaSangramento" required />
+          <p id="ajudaFim" class="cycle-dialog-note"></p>
+          <button type="button" id="registrarFimDia">
+            Minha menstruação terminou
+          </button>
+        </div>
+        <p id="erroDia" role="alert" class="cycle-dialog-error"></p>
+        <div class="cycle-dialog-actions">
+          <button id="registrarDia" type="button">
+            Minha menstruação começou neste dia
+          </button>
+          <button id="editarPeriodoDia" type="button" class="secundario" hidden>
+            Editar este período
+          </button>
+          <button id="fecharDetalhe" type="button" class="secundario">
+            Cancelar
+          </button>
+        </div>
+      </dialog>
+    </main>
+    <script src="../js/ciclo-variacoes.js"></script>
+    <script src="../js/ciclo.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/reminders.js"></script>
+  </body>
 </html>
