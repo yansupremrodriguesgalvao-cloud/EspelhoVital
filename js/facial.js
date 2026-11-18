@@ -1,5 +1,5 @@
 const MODEL_URL = "https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@master/weights";
-const API_USUARIOS = "http://localhost:8081/usuarios";
+const API_USUARIOS = "https://espelhovital-back-qob6.onrender.com/usuarios";
 
 const video = document.getElementById("video");
 const overlayMsg = document.getElementById("facialOverlayMsg");

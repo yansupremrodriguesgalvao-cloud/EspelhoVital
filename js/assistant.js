@@ -1,6 +1,6 @@
-const API_SONO = "http://localhost:8081/sono";
-const API_HUMOR = "http://localhost:8081/humor";
-const API_CICLO = "http://localhost:8081/ciclo";
+const API_SONO = "https://espelhovital-back-qob6.onrender.com/sono";
+const API_HUMOR = "https://espelhovital-back-qob6.onrender.com/humor";
+const API_CICLO = "https://espelhovital-back-qob6.onrender.com/ciclo";
 
 const nomeUsuario = (localStorage.getItem("usuarioNome") || "").split(" ")[0];
 

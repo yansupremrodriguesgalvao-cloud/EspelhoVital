@@ -37,7 +37,7 @@ async function carregarHistoricoMenstrual() {
 
     try {
 
-        const resposta = await fetch("http://localhost:8081/ciclo");
+        const resposta = await fetch("https://espelhovital-back-qob6.onrender.com/ciclo");
         const registros = await resposta.json();
 
         const area = document.getElementById("historicoConteudo");

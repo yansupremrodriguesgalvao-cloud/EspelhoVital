@@ -1,4 +1,4 @@
-const API_DASHBOARD = "http://localhost:8081/dashboard";
+const API_DASHBOARD = "https://espelhovital-back-qob6.onrender.com/dashboard";
 
 function formatarData(dataIso) {
     if (!dataIso) return null;

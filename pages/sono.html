@@ -63,8 +63,8 @@ async function carregarHistoricoSono() {
 
         const usuarioId = localStorage.getItem("usuarioId");
         const url = usuarioId
-            ? `http://localhost:8081/sono?usuarioId=${usuarioId}`
-            : "http://localhost:8081/sono";
+            ? `https://espelhovital-back-qob6.onrender.com/sono?usuarioId=${usuarioId}`
+            : "https://espelhovital-back-qob6.onrender.com/sono";
 
         const resposta = await fetch(url);
         const registros = await resposta.json();

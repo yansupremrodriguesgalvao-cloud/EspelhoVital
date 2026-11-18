@@ -720,8 +720,8 @@ async function carregarHistoricoMenstrual() {
 
         const usuarioId = localStorage.getItem("usuarioId");
         const url = usuarioId
-            ? `http://localhost:8081/ciclo?usuarioId=${usuarioId}`
-            : "http://localhost:8081/ciclo";
+            ? `https://espelhovital-back-qob6.onrender.com/ciclo?usuarioId=${usuarioId}`
+            : "https://espelhovital-back-qob6.onrender.com/ciclo";
 
         const resposta = await fetch(url);
         const registros = await resposta.json();

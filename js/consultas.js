@@ -1,4 +1,4 @@
-const API_CONSULTAS = "http://localhost:8081/consultas";
+const API_CONSULTAS = "https://espelhovital-back-qob6.onrender.com/consultas";
 
 const form = document.getElementById("consultaForm");
 const feedback = document.getElementById("feedback");

@@ -1,4 +1,4 @@
-const API = "http://localhost:8081";
+const API = "https://espelhovital-back-qob6.onrender.com";
 
 const CORES_HUMOR = ["#7c3aed", "#c084fc", "#3b82f6", "#22c55e", "#facc15", "#f97316", "#ef4444", "#ec4899"];
 

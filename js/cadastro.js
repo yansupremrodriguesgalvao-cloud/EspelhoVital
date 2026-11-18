@@ -38,7 +38,7 @@ form.addEventListener("submit", async function (event) {
     try {
 
         const resposta = await fetch(
-            "http://localhost:8081/usuarios/cadastrar",
+            "https://espelhovital-back-qob6.onrender.com/usuarios/cadastrar",
             {
                 method: "POST",
                 headers: {

@@ -1,4 +1,4 @@
-const API_USUARIOS = "http://localhost:8081/usuarios";
+const API_USUARIOS = "https://espelhovital-back-qob6.onrender.com/usuarios";
 
 function getUsuarioId() {
     const id = localStorage.getItem("usuarioId");

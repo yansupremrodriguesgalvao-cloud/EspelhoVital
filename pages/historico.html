@@ -35,7 +35,7 @@ async function carregarHistorico() {
     try {
 
         const resposta = await fetch(
-            "http://localhost:8081/sono"
+            "https://espelhovital-back-qob6.onrender.com/sono"
         );
 
         const registros = await resposta.json();

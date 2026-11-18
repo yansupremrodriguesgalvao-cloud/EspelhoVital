@@ -1,4 +1,4 @@
-const API = "http://localhost:8081/sono";
+const API = "https://espelhovital-back-qob6.onrender.com/sono";
 
 function estimarHumor(horas) {
     if (horas < 5) return "😢 Muito cansado / irritado";

@@ -636,7 +636,7 @@ async function(e){
         const resposta =
         await fetch(
 
-            "http://localhost:8081/ciclo/calcular",
+            "https://espelhovital-back-qob6.onrender.com/ciclo/calcular",
 
             {
 

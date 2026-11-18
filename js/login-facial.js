@@ -1,5 +1,5 @@
 const MODEL_URL_LOGIN = "https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@master/weights";
-const API_LOGIN_FACIAL = "http://localhost:8081/usuarios/face/login";
+const API_LOGIN_FACIAL = "https://espelhovital-back-qob6.onrender.com/usuarios/face/login";
 
 const btnAbrirFacial = document.getElementById("btnAbrirFacial");
 const facialLoginBox = document.getElementById("facialLoginBox");
