@@ -28,7 +28,7 @@
   }
   async function csrf() {
     if (!csrfPromise)
-      csrfPromise = nativeFetch(base + "/api/csrf", { credentials: "include" })
+      csrfPromise = nativeFetch(base + "/api/csrf", { credentials: "include", signal: AbortSignal.timeout(180000) })
         .then(async (r) => {
           if (!r.ok)
             throw new Error("Não foi possível iniciar uma sessão segura.");
@@ -60,7 +60,7 @@
       ...options,
       headers,
       credentials: "include",
-      signal: options.signal || AbortSignal.timeout(40000),
+      signal: options.signal || AbortSignal.timeout(180000),
     });
     if (!r.ok) {
       const error = await r.json().catch(() => null);
@@ -94,7 +94,7 @@
   }
   const ready = publicPage
     ? Promise.resolve(null)
-    : nativeFetch(base + "/api/sessao", { credentials: "include" })
+    : nativeFetch(base + "/api/sessao", { credentials: "include", signal: AbortSignal.timeout(180000) })
         .then(async (r) => {
           if (r.status === 401) {
             clearUser();

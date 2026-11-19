@@ -1,4 +1,6 @@
 window.EV_CONFIG = {
-  // For another environment, set the full API URL here and configure allowed origins in the back-end.
-  apiBase: location.protocol + "//" + location.hostname + ":8081",
+  // Local: backend na porta 8081. Vercel: rotas encaminhadas pelo vercel.json.
+  apiBase: ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname)
+    ? location.protocol + "//" + location.hostname + ":8081"
+    : location.origin,
 };
