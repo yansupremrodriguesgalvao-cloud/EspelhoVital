@@ -86,6 +86,7 @@
 
     if (!r.ok) {
       const error = await r.json().catch(() => null);
+      console.error("Erro na API:", url.pathname, "HTTP", r.status);
 
       if (
         r.status === 401 &&
