@@ -2,7 +2,7 @@
 
 Importe o repositorio yansupremrodriguesgalvao-cloud/EspelhoVital, branch master.
 Framework Preset: Other. Root Directory: raiz. Sem comando de build; arquivos estaticos na raiz.
-O vercel.json encaminha as rotas da API para https://espelhovital-back-r859.onrender.com.
+O vercel.json encaminha as rotas da API para https://espelhovital-back-qob6.onrender.com.
 As rotas de API preservam os caminhos, incluindo /api/csrf, /api/login e /usuarios/cadastrar.
 As respostas de API nao devem ser armazenadas em cache. O cookie de sessao fica no dominio do frontend.
 Em localhost, js/config.js continua usando o backend local na porta 8081.
