@@ -1,20 +1,9 @@
-# Frontend na Vercel
+# Publicar o frontend na Vercel
 
-Importe o repositorio yansupremrodriguesgalvao-cloud/EspelhoVital, branch master.
-Framework Preset: Other. Root Directory: raiz. Sem comando de build; arquivos estaticos na raiz.
-O vercel.json encaminha as rotas da API para https://espelhovital-back-r859.onrender.com.
-Para publicar uma copia com seu proprio backend, troque o dominio em todos os destinos de vercel.json.
-As rotas de API preservam os caminhos, incluindo /api/csrf, /api/login e /usuarios/cadastrar.
-As respostas de API nao devem ser armazenadas em cache. O cookie de sessao fica no dominio do frontend.
-Em localhost, js/config.js continua usando o backend local na porta 8081.
+1. Copie a URL HTTPS do seu backend no Render. Abra `/api/csrf` nesse endereço e confira se aparece um JSON com um token.
+2. No arquivo [vercel.ts](vercel.ts), altere apenas `renderUrl` para a URL do seu backend, por exemplo `https://meu-backend.onrender.com`. Salve e envie a alteração ao GitHub.
+3. Na Vercel, importe o repositório do frontend. Use a raiz do projeto, **Framework Preset: Other** e clique em **Deploy**.
+4. No Render, em **Environment**, coloque o endereço HTTPS do frontend publicado em `APP_FRONTEND_URL`, sem barra no final, e publique novamente o backend. Se o serviço já tiver `APP_CORS_ORIGINS`, atualize esse campo para incluir a nova URL da Vercel.
+5. Abra `/api/csrf` no endereço da Vercel e confira se aparece um token. Depois teste cadastro, login e logout no site.
 
-Depois do deploy, configure no Render:
-APP_CORS_ORIGINS=https://SEU_DOMINIO_VERCEL
-APP_FRONTEND_URL=https://SEU_DOMINIO_VERCEL
-
-Use a URL estavel de producao, sem barra final. Para manter teste local, APP_CORS_ORIGINS aceita origens separadas por virgula.
-Nao coloque senhas de banco nem chave Groq no frontend. Nenhuma variavel secreta e necessaria na Vercel.
-
-Verifique no navegador: /api/csrf retorna JSON; cadastro; login; atualizar pagina mantendo sessao; logout.
-No primeiro acesso apos inatividade, o Render gratuito pode demorar para iniciar.
-A verificacao definitiva de cookies, CORS e CSRF deve ser feita no dominio publicado.
+A senha do Aiven fica no Render. Para rodar o frontend na máquina, inicie o backend na porta 8081 e abra o site com um servidor local como o Live Server.
