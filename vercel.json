@@ -6,115 +6,115 @@
     "cleanUrls":  false,
     "rewrites":  [
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/api",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/api",
                          "source":  "/api"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/api/:path*",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/api/:path*",
                          "source":  "/api/:path*"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/usuarios",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/usuarios",
                          "source":  "/usuarios"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/usuarios/:path*",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/usuarios/:path*",
                          "source":  "/usuarios/:path*"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/ciclo",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/ciclo",
                          "source":  "/ciclo"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/ciclo/:path*",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/ciclo/:path*",
                          "source":  "/ciclo/:path*"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/consultas",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/consultas",
                          "source":  "/consultas"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/consultas/:path*",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/consultas/:path*",
                          "source":  "/consultas/:path*"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/sono",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/sono",
                          "source":  "/sono"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/sono/:path*",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/sono/:path*",
                          "source":  "/sono/:path*"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/humor",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/humor",
                          "source":  "/humor"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/humor/:path*",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/humor/:path*",
                          "source":  "/humor/:path*"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/dashboard",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/dashboard",
                          "source":  "/dashboard"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/dashboard/:path*",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/dashboard/:path*",
                          "source":  "/dashboard/:path*"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/diario",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/diario",
                          "source":  "/diario"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/diario/:path*",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/diario/:path*",
                          "source":  "/diario/:path*"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/lembretes",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/lembretes",
                          "source":  "/lembretes"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/lembretes/:path*",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/lembretes/:path*",
                          "source":  "/lembretes/:path*"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/relatorios",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/relatorios",
                          "source":  "/relatorios"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/relatorios/:path*",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/relatorios/:path*",
                          "source":  "/relatorios/:path*"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/conta",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/conta",
                          "source":  "/conta"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/conta/:path*",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/conta/:path*",
                          "source":  "/conta/:path*"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/analise-ia",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/analise-ia",
                          "source":  "/analise-ia"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/analise-ia/:path*",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/analise-ia/:path*",
                          "source":  "/analise-ia/:path*"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/recomendacoes",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/recomendacoes",
                          "source":  "/recomendacoes"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/recomendacoes/:path*",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/recomendacoes/:path*",
                          "source":  "/recomendacoes/:path*"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/grok",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/grok",
                          "source":  "/grok"
                      },
                      {
-                         "destination":  "https://espelhovital-back-r859.onrender.com/grok/:path*",
+                         "destination":  "https://espelhovital-back-saymon.onrender.com/grok/:path*",
                          "source":  "/grok/:path*"
                      }
                  ],
